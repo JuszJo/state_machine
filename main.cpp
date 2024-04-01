@@ -41,7 +41,7 @@ int main() {
 
     Shader shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
 
-    Player player("src\\assets\\player.png", 0.0f, 0.0f, 30.0f, 30.0f);
+    Player player("src\\assets\\player.png", 0.0f, 0.0f, 624.0f, 58.0f);
 
     glm::mat4 projection = glm::mat4(1.0f);
     // glm::mat4 view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
