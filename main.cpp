@@ -24,20 +24,26 @@ int display_w, display_h;
 void processInput(GLFWwindow* window) {
 }
 
-int main() {
-    if (!glfwInit()) return 1;
+GLFWwindow* initGLFW(int width, int height, const char* name) {
+    if (!glfwInit()) return 0;
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "State Machine", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(width, height, name, NULL, NULL);
 
     if (!window) {
         glfwTerminate();
 
-        return 1;
+        return 0;
     }
 
     glfwMakeContextCurrent(window);
 
     glewInit();
+
+    return window;
+}
+
+int main() {
+    GLFWwindow* window = initGLFW(800, 600, "State Machine");
 
     Shader shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
 
