@@ -34,7 +34,7 @@ class Player: public EntityV2 {
         Animation animation;
 
         // default constructor
-        // Player() {}
+        Player() {}
 
         Player(const char* texturePath, float xPos, float yPos, float playerWidth, float playerHeight) {
             x = xPos;
@@ -60,17 +60,6 @@ class Player: public EntityV2 {
             cleanupBuffers();
 
             loadImage(texturePath, &TBO);
-            // loadImage((char*)"src\\assets\\playeridle.png", &TBO2);
-            // loadImage((char*)"src\\assets\\player2.png", &TBO3);
-            // loadImage((char*)"src\\assets\\playerup.png", &TBO4);
-            // loadImage((char*)"src\\assets\\playerattack.png", &TBO5);
-            // loadImage((char*)"src\\assets\\playerattack2.png", &TBO6);
-
-            // Animation newAnimation((char*)"idle", 11.0f, 4, 1, nullptr, false);
-
-            // newAnimation.updateTextureBuffer(&TBO2);
-
-            // animation = newAnimation;
 
             // Hitbox newHitbox(x, y, 30.0f, height);
 
@@ -83,9 +72,6 @@ class Player: public EntityV2 {
             // newAttackHitbox.defineOffset(18.0f, 10.0f);
 
             // attackHitbox = newAttackHitbox;
-
-            // Enemy placeHolder((char*)"src\\assets\\player.png", 400.0f, 500.0f, 78.0f, 58.0f);
-            // enemies[0] = &placeHolder;
         }
 
         void checkKeyInput() {
@@ -96,6 +82,7 @@ class Player: public EntityV2 {
             if(KeyInput::key.d) {
                 if(animation.currentState != &RunRight::getInstance()) {
                     std::cout << "right\n";
+                    speed = glm::vec3(acceleration, speed.y, 0.0f);
                     animation.setState(RunRight::getInstance());
                 }
                 // currentState = RIGHT;
@@ -103,6 +90,7 @@ class Player: public EntityV2 {
             if(!KeyInput::key.a && !KeyInput::key.d && !KeyInput::key.w && !KeyInput::key.s) {
                 if(animation.currentState != &Idle::getInstance()) {
                     std::cout << "idle\n";
+                    speed = glm::vec3(0.0f, speed.y, 0.0f);
                     animation.setState(Idle::getInstance());
                 }
                 // currentState = IDLE;
@@ -168,17 +156,19 @@ class Player: public EntityV2 {
             setUniform1f(shader, "totalFrames", animation.currentState->totalFrames);
             setUniform1f(shader, "currentFrame", animation.currentState->currentFrame);
             glBindTexture(GL_TEXTURE_2D, animation.currentState->TBO);
-            // glBindTexture(GL_TEXTURE_2D, TBO);
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-            resetModel();
         }
 
         void update() {
             checkKeyInput();
             animation.animate();
             // checkState();
-            // move();
+            move();
+
+            model = glm::mat4(1.0f);
+
+            model = glm::translate(model, glm::vec3(x, y, 0.0f));
         }
 
         void resetModel() {
