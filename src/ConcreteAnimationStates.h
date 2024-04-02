@@ -13,7 +13,7 @@ class Idle : public AnimationState {
             totalFrames = 11.0f;
             currentFrame = 1.0f;
 
-            frameBuffer = 10;
+            frameBuffer = 4;
 
             loadImage(texturePath, &TBO);
         }
@@ -34,7 +34,7 @@ class RunRight : public AnimationState {
             totalFrames = 8.0f;
             currentFrame = 1.0f;
 
-            frameBuffer = 10;
+            frameBuffer = 4;
 
             loadImage(texturePath, &TBO);
         }
