@@ -14,5 +14,7 @@ class Animation {
         void setState(AnimationState& newState);
 
         void toggleAnimation(AnimationState& animationState);
+
+        void animate();
 };
 

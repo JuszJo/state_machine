@@ -176,6 +176,7 @@ class Player: public EntityV2 {
 
         void update() {
             checkKeyInput();
+            animation.animate();
             // checkState();
             // move();
         }

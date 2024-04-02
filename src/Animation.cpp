@@ -14,3 +14,12 @@ void Animation::setState(AnimationState& newState) {
 void Animation::toggleAnimation(AnimationState& animationState) {
     this->currentState->toggleAnimation(this, animationState);
 }
+
+void Animation::animate() {
+    if(this->currentState->currentFrame != this->currentState->totalFrames) {
+        ++this->currentState->currentFrame;
+    }
+    else {
+        this->currentState->currentFrame = 1;
+    }
+}
