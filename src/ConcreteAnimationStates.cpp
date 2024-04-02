@@ -1,5 +1,16 @@
 #include "ConcreteAnimationStates.h"
 
+Idle::Idle() {
+    name = "idle";
+
+    totalFrames = 11.0f;
+    currentFrame = 1.0f;
+
+    frameBuffer = 4;
+
+    loadImage(texturePath, &TBO);
+}
+
 void Idle::exit(Animation* animation) {
     animation->currentState->currentFrame = 1;
 }
@@ -16,6 +27,17 @@ AnimationState& Idle::getInstance() {
     static Idle singleton;
 
 	return singleton;
+}
+
+RunRight::RunRight() {
+    name = "run right";
+
+    totalFrames = 8.0f;
+    currentFrame = 1.0f;
+
+    frameBuffer = 4;
+
+    loadImage(texturePath, &TBO);
 }
 
 void RunRight::exit(Animation* animation) {

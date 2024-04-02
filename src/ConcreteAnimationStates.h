@@ -7,16 +7,7 @@ class Idle : public AnimationState {
     public:
         const char* texturePath = "src\\assets\\playeridle.png";
 
-        Idle() {
-            name = "idle";
-
-            totalFrames = 11.0f;
-            currentFrame = 1.0f;
-
-            frameBuffer = 4;
-
-            loadImage(texturePath, &TBO);
-        }
+        Idle();
 
         void enter(Animation* animation);
         void toggleAnimation(Animation* animation, AnimationState& animationState);
@@ -28,16 +19,7 @@ class RunRight : public AnimationState {
     public:
         const char* texturePath = "src\\assets\\player.png";
 
-        RunRight() {
-            name = "run right";
-
-            totalFrames = 8.0f;
-            currentFrame = 1.0f;
-
-            frameBuffer = 4;
-
-            loadImage(texturePath, &TBO);
-        }
+        RunRight();
 
         void enter(Animation* animation);
         void toggleAnimation(Animation* animation, AnimationState& animationState);
