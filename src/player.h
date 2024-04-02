@@ -165,6 +165,8 @@ class Player: public EntityV2 {
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
             // glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+            setUniform1f(shader, "totalFrames", animation.currentState->totalFrames);
+            setUniform1f(shader, "currentFrame", animation.currentState->currentFrame);
             glBindTexture(GL_TEXTURE_2D, animation.currentState->TBO);
             // glBindTexture(GL_TEXTURE_2D, TBO);
             glBindVertexArray(VAO);

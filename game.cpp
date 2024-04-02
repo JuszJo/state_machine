@@ -15,7 +15,7 @@ Game::Game(int* display_w, int* display_h) {
 void Game::initEntities() {
     Shader* shader = new Shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
 
-    Player* player = new Player("src\\assets\\player.png", 0.0f, 0.0f, 624.0f, 58.0f);
+    Player* player = new Player("src\\assets\\player.png", 0.0f, 0.0f, 78.0f, 58.0f);
 
     player->addShader(shader);
 

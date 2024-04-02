@@ -10,6 +10,9 @@ class Idle : public AnimationState {
         Idle() {
             name = "idle";
 
+            totalFrames = 11.0f;
+            currentFrame = 1.0f;
+
             loadImage(texturePath, &TBO);
         }
 
@@ -25,6 +28,9 @@ class RunRight : public AnimationState {
 
         RunRight() {
             name = "run right";
+
+            totalFrames = 8.0f;
+            currentFrame = 1.0f;
 
             loadImage(texturePath, &TBO);
         }
