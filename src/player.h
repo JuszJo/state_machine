@@ -7,8 +7,8 @@
 
 #include "keyinput.h"
 
-#include "Animation.h"
-#include "ConcreteAnimationStates.h"
+#include "animation/Animation.h"
+#include "animation/ConcreteAnimationStates.h"
 
 // #include "entity.h"
 // #include "animation.h"
