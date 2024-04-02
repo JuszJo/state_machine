@@ -32,4 +32,13 @@ void Game::run() {
 
         currentEntity->render(projection);
     }
+
+    if(this->keyInput.key.d) {
+        this->animation.setState(RunRight::getInstance());
+    }
+    else {
+        this->animation.setState(Idle::getInstance());
+    }
+
+    std::cout << this->animation.currentState->name << std::endl;
 }

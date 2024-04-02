@@ -10,11 +10,9 @@ class Animation {
         
         Animation();
 
-        void nextState();
-
         // This will get called by the current state
         void setState(AnimationState& newState);
 
-        void toggle();
+        void toggleAnimation(AnimationState& animationState);
 };
 

@@ -12,6 +12,8 @@
                 "-L./",
                 "${file}",
                 "game.cpp",
+                "./src/Animation.cpp",
+                "./src/ConcreteAnimationStates.cpp",
                 // "Light.cpp",
                 // "ConcreteLightStates.cpp",
                 "-o",

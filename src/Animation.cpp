@@ -1,7 +1,8 @@
 #include "Animation.h"
+#include "ConcreteAnimationStates.h"
 
 Animation::Animation() {
-
+    this->currentState = &Idle::getInstance();
 }
 
 void Animation::setState(AnimationState& newState) {
@@ -10,6 +11,6 @@ void Animation::setState(AnimationState& newState) {
     this->currentState->enter(this);
 }
 
-void Animation::toggle() {
-    this->currentState->toggleAnimation(this);
+void Animation::toggleAnimation(AnimationState& animationState) {
+    this->currentState->toggleAnimation(this, animationState);
 }

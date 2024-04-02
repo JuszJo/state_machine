@@ -48,6 +48,8 @@ int main() {
         glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+        game.keyInput.processInput(window);
+
         game.run();
         
         glfwSwapBuffers(window);
