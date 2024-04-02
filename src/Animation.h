@@ -6,6 +6,8 @@ class AnimationState;
 
 class Animation {
     public:
+        int elapsedFrames = 0;
+        
         AnimationState* currentState;
         
         Animation();

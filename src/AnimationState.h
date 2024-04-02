@@ -15,6 +15,7 @@ class AnimationState {
     public:
         const char* name;
         unsigned int TBO;
+        int frameBuffer;
         float totalFrames;
         float currentFrame;
         virtual void enter(Animation* animation) = 0;

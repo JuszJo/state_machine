@@ -9,6 +9,8 @@ void Animation::setState(AnimationState& newState) {
     this->currentState->exit(this);
     this->currentState = &newState;
     this->currentState->enter(this);
+
+    this->elapsedFrames = 0;
 }
 
 void Animation::toggleAnimation(AnimationState& animationState) {
@@ -16,10 +18,16 @@ void Animation::toggleAnimation(AnimationState& animationState) {
 }
 
 void Animation::animate() {
-    if(this->currentState->currentFrame != this->currentState->totalFrames) {
-        ++this->currentState->currentFrame;
+    if(elapsedFrames % this->currentState->frameBuffer == 0) {
+        if(this->currentState->currentFrame != this->currentState->totalFrames) {
+            ++this->currentState->currentFrame;
+        }
+        else {
+            this->currentState->currentFrame = 1;
+        }
+
+        elapsedFrames = 0;
     }
-    else {
-        this->currentState->currentFrame = 1;
-    }
+
+    ++elapsedFrames;
 }
