@@ -1,12 +1,14 @@
 #ifndef MY_ARRAY_H 
 #define MY_ARRAY_H
 
+#include <iostream>
+
 template <class T>
 class MyArray {
     public:
         MyArray() {
             if (array == NULL) {
-                printf("Error: Memory allocation failed.\n");
+                std::cout << "Error: Memory allocation failed.\n";
                 exit(EXIT_FAILURE);
             }
         }
@@ -56,7 +58,7 @@ class MyArray {
 
             // Check if realloc succeeded
             if (array == NULL) {
-                printf("Error: Memory allocation failed.\n");
+                std::cout << "Error: Memory allocation failed.\n";
                 exit(EXIT_FAILURE);
             }
 
@@ -70,7 +72,7 @@ class MyArray {
 
             // Check if realloc succeeded
             if (array == NULL) {
-                printf("Error: Memory allocation failed.\n");
+                std::cout << "Error: Memory allocation failed.\n";
                 exit(EXIT_FAILURE);
             }
 

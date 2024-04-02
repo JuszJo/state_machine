@@ -6,23 +6,9 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 
-#include "libs/shader.h"
-
-#include "src/player.h"
-
-// struct Camera {
-//     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
-//     glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
-//     glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-//     float cameraSpeed = 2.0f;
-// };
-
-// Camera camera;
+#include "game.h"
 
 int display_w, display_h;
-
-void processInput(GLFWwindow* window) {
-}
 
 GLFWwindow* initGLFW(int width, int height, const char* name) {
     if (!glfwInit()) return 0;
@@ -45,12 +31,9 @@ GLFWwindow* initGLFW(int width, int height, const char* name) {
 int main() {
     GLFWwindow* window = initGLFW(800, 600, "State Machine");
 
-    Shader shader("shaders/vertexShader.glsl", "shaders/fragmentShader.glsl");
+    Game game(&display_w, &display_h);
 
-    Player player("src\\assets\\player.png", 0.0f, 0.0f, 624.0f, 58.0f);
-
-    glm::mat4 projection = glm::mat4(1.0f);
-    // glm::mat4 view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
+    game.initEntities();
 
     glfwSwapInterval(1);
 
@@ -65,16 +48,7 @@ int main() {
         glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        shader.use();
-
-        player.keyInput.processInput(window);
-
-        projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
-        // view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
-
-        // player.render(&shader, projection, view);
-        player.render(&shader, projection);
-        // player.update();
+        game.run();
         
         glfwSwapBuffers(window);
     }

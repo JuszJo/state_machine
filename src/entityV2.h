@@ -19,6 +19,17 @@ class EntityV2 {
 
         float x, y, width, height;
 
+        // virtual void listen(KeyInput::Keys* keys) {};
+        Shader* shader;
+
+        virtual void update() {};
+
+        virtual void render(glm::mat4 projection) {};
+
+        void addShader(Shader* newShader) {
+            shader = newShader;
+        }
+
         void updatePosition(float newX, float newY) {
             x = newX;
             y = newY;
