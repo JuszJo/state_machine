@@ -6,10 +6,7 @@
 #include "utils/my_array.h"
 #include "src/entityV2.h"
 
-#include "src/keyinput.h"
-#include "src/Animation.h"
-#include "src/AnimationState.h"
-#include "src/ConcreteAnimationStates.h"
+// #include "src/keyinput.h"
 
 class Game {
     public:
@@ -17,9 +14,8 @@ class Game {
         int* display_w;
         int *display_h;
         glm::mat4 projection;
-        KeyInput keyInput;
 
-        Animation animation;
+        // static KeyInput keyInput;
 
         Game(int* display_w, int* display_h);
 

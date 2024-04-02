@@ -6,9 +6,13 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 
+#include "src/keyinput.h"
+
 #include "game.h"
 
 int display_w, display_h;
+
+KeyInput::Keys KeyInput::key;
 
 GLFWwindow* initGLFW(int width, int height, const char* name) {
     if (!glfwInit()) return 0;
@@ -48,7 +52,7 @@ int main() {
         glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        game.keyInput.processInput(window);
+        KeyInput::processInput(window);
 
         game.run();
         

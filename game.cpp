@@ -31,14 +31,6 @@ void Game::run() {
         EntityV2* currentEntity = this->entities[i];
 
         currentEntity->render(projection);
+        currentEntity->update();
     }
-
-    if(this->keyInput.key.d) {
-        this->animation.setState(RunRight::getInstance());
-    }
-    else {
-        this->animation.setState(Idle::getInstance());
-    }
-
-    std::cout << this->animation.currentState->name << std::endl;
 }

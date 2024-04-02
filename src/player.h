@@ -2,7 +2,14 @@
 #define PLAYER_H
 
 #include "entityV2.h"
+
+#include "../game.h"
+
 #include "keyinput.h"
+
+#include "Animation.h"
+#include "ConcreteAnimationStates.h"
+
 // #include "entity.h"
 // #include "animation.h"
 // #include "gravity.h"
@@ -24,7 +31,7 @@ class Player: public EntityV2 {
 
         float acceleration = 2.0f;
 
-        KeyInput keyInput;
+        Animation animation;
 
         // default constructor
         // Player() {}
@@ -81,13 +88,26 @@ class Player: public EntityV2 {
             // enemies[0] = &placeHolder;
         }
 
-        // void checkKeyInput() {
-        //     // if(keyInput.key.w) currentState = UP;
-        //     // if(keyInput.key.s) currentState = DOWN;
-        //     if(keyInput.key.a) currentState = LEFT;
-        //     if(keyInput.key.d) currentState = RIGHT;
-        //     if(!keyInput.key.a && !keyInput.key.d && !keyInput.key.w && !keyInput.key.s) currentState = IDLE;
-        // }
+        void checkKeyInput() {
+            if(KeyInput::key.a) {
+                // std::cout << "left\n";
+                // currentState = LEFT
+            }
+            if(KeyInput::key.d) {
+                if(animation.currentState != &RunRight::getInstance()) {
+                    std::cout << "right\n";
+                    animation.setState(RunRight::getInstance());
+                }
+                // currentState = RIGHT;
+            }
+            if(!KeyInput::key.a && !KeyInput::key.d && !KeyInput::key.w && !KeyInput::key.s) {
+                if(animation.currentState != &Idle::getInstance()) {
+                    std::cout << "idle\n";
+                    animation.setState(Idle::getInstance());
+                }
+                // currentState = IDLE;
+            }
+        }
 
 
         void checkState() {
@@ -145,17 +165,17 @@ class Player: public EntityV2 {
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
             // glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-            // glBindTexture(GL_TEXTURE_2D, *animation.currentAnimatedState[0].TBO);
-            glBindTexture(GL_TEXTURE_2D, TBO);
+            glBindTexture(GL_TEXTURE_2D, animation.currentState->TBO);
+            // glBindTexture(GL_TEXTURE_2D, TBO);
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             resetModel();
         }
 
         void update() {
-            // checkKeyInput();
-            checkState();
-            move();
+            checkKeyInput();
+            // checkState();
+            // move();
         }
 
         void resetModel() {

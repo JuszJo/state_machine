@@ -5,11 +5,13 @@
 
 class Idle : public AnimationState {
     public:
+        const char* texturePath = "src\\assets\\playeridle.png";
+
         Idle() {
             name = "idle";
-        }
 
-        const char* texturePath = "src\\assets\\playeridle.png";
+            loadImage(texturePath, &TBO);
+        }
 
         void enter(Animation* animation);
         void toggleAnimation(Animation* animation, AnimationState& animationState);
@@ -19,11 +21,13 @@ class Idle : public AnimationState {
 
 class RunRight : public AnimationState {
     public:
+        const char* texturePath = "src\\assets\\player.png";
+
         RunRight() {
             name = "run right";
-        }
 
-        const char* texturePath = "src\\assets\\player.png";
+            loadImage(texturePath, &TBO);
+        }
 
         void enter(Animation* animation);
         void toggleAnimation(Animation* animation, AnimationState& animationState);

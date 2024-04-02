@@ -24,11 +24,11 @@ class KeyInput {
             bool space = false;
         };
 
-        Keys key;
+        static Keys key;
 
         KeyInput() {}
 
-        void processInput(GLFWwindow* window) {
+        static void processInput(GLFWwindow* window) {
             if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) key.w = true;
             if(glfwGetKey(window, GLFW_KEY_W) == GLFW_RELEASE) key.w = false;
 
