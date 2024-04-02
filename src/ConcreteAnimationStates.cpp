@@ -1,7 +1,7 @@
 #include "ConcreteAnimationStates.h"
 
 void Idle::exit(Animation* animation) {
-
+    animation->currentState->currentFrame = 1;
 }
 
 void Idle::toggleAnimation(Animation* animation, AnimationState& animationState) {
@@ -19,7 +19,7 @@ AnimationState& Idle::getInstance() {
 }
 
 void RunRight::exit(Animation* animation) {
-
+    animation->currentState->currentFrame = 1;
 }
 
 void RunRight::toggleAnimation(Animation* animation, AnimationState& animationState) {
