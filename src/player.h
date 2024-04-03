@@ -10,14 +10,6 @@
 #include "animation/Animation.h"
 #include "animation/ConcreteAnimationStates.h"
 
-// #include "entity.h"
-// #include "animation.h"
-// #include "gravity.h"
-// #include "collision.h"
-// #include "hitbox.h"
-// #include "enemy.h"
-// #include "enemyFactory.h"
-
 class Player: public EntityV2 {
     private:
         int stride = 5;
@@ -76,12 +68,15 @@ class Player: public EntityV2 {
 
         void checkKeyInput() {
             if(KeyInput::key.a) {
-                // std::cout << "left\n";
-                // currentState = LEFT
+                if(animation.currentState != &RunLeft::getInstance()) {
+                    std::cout << "left\n";
+                    speed = glm::vec3(-acceleration, speed.y, 0.0f);
+                    animation.setState(RunLeft::getInstance());
+                }
             }
             if(KeyInput::key.d) {
                 if(animation.currentState != &RunRight::getInstance()) {
-                    std::cout << "right\n";
+                    // std::cout << "right\n";
                     speed = glm::vec3(acceleration, speed.y, 0.0f);
                     animation.setState(RunRight::getInstance());
                 }
@@ -89,46 +84,12 @@ class Player: public EntityV2 {
             }
             if(!KeyInput::key.a && !KeyInput::key.d && !KeyInput::key.w && !KeyInput::key.s) {
                 if(animation.currentState != &Idle::getInstance()) {
-                    std::cout << "idle\n";
+                    // std::cout << "idle\n";
                     speed = glm::vec3(0.0f, speed.y, 0.0f);
                     animation.setState(Idle::getInstance());
                 }
                 // currentState = IDLE;
             }
-        }
-
-
-        void checkState() {
-            // switch (currentState) {
-            //     case LEFT:
-            //         speed = glm::vec3(-acceleration, speed.y, 0.0f);
-                    
-            //         break;
-
-            //     case RIGHT:
-            //         speed = glm::vec3(acceleration, speed.y, 0.0f);
-                    
-            //         break;
-
-            //     case DOWN:
-            //         speed = glm::vec3(0.0f, -acceleration, 0.0f);
-                    
-            //         break;
-
-            //     case UP:
-            //         speed = glm::vec3(0.0f, acceleration, 0.0f);
-                    
-            //         break;
-
-            //     case IDLE:
-            //         // speed = glm::vec3(0.0f, 0.0f, 0.0f);
-            //         speed = glm::vec3(0.0f, speed.y, 0.0f);
-                    
-            //         break;
-                
-            //     default:
-            //         break;
-            // }
         }
 
         void move() {

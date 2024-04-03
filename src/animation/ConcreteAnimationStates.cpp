@@ -57,3 +57,32 @@ AnimationState& RunRight::getInstance() {
 
 	return singleton;
 }
+
+RunLeft::RunLeft() {
+    name = "run left";
+
+    totalFrames = 8.0f;
+    currentFrame = 1.0f;
+
+    frameBuffer = 4;
+
+    loadImage(texturePath, &TBO);
+}
+
+void RunLeft::exit(Animation* animation) {
+    animation->currentState->currentFrame = 1;
+}
+
+void RunLeft::toggleAnimation(Animation* animation, AnimationState& animationState) {
+    animation->setState(animationState);
+}
+
+void RunLeft::enter(Animation* animation) {
+
+}
+
+AnimationState& RunLeft::getInstance() {
+    static RunLeft singleton;
+
+	return singleton;
+}
