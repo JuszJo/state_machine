@@ -38,3 +38,15 @@ class RunLeft : public AnimationState {
         void exit(Animation* animation);
         static AnimationState& getInstance();
 };
+
+class Up : public AnimationState {
+    public:
+        const char* texturePath = "src\\assets\\playerup.png";
+
+        Up();
+
+        void enter(Animation* animation);
+        void toggleAnimation(Animation* animation, AnimationState& animationState);
+        void exit(Animation* animation);
+        static AnimationState& getInstance();
+};

@@ -7,20 +7,71 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../libs/stb_image.h"
-
 #include "../libs/shader.h"
+
+#include "../utils/my_array.h"
+
+#include "components/components.h"
 
 class EntityV2 {
     public:
+        MyArray<BaseComponent*> components;
+
         glm::mat4 model = glm::mat4(1.0f);
 
         unsigned int VAO, VBO, EBO, TBO;
 
-        float x, y, width, height;
+        bool active = false;
 
         // virtual void listen(KeyInput::Keys* keys) {};
         Shader* shader;
+
+         // Add a component to the entity
+        template<typename T>
+        T* addComponent() {
+            T* component = new T(); // Create a new instance of the component
+            components.add_element(component); // Add the component's pointer to the array
+            return component; // Return the component's pointer
+        }
+        // template<typename T, typename... Args>
+        // T* addComponent(Args... args) {
+        //     T* component = new T(args...); // Create a new instance of the component
+        //     components.add_element(component); // Add the component's pointer to the array
+        //     return component; // Return the component's pointer
+        // }
+
+        // // Remove a component from the entity
+        // template<typename T>
+        // void removeComponent() {
+        //     components.remove_element_if([&](const auto& component) {
+        //         return dynamic_cast<T*>(component.get()) != nullptr;
+        //     });
+        // }
+
+        template<typename T>
+        bool hasComponent() const {
+            for (const auto& component : components) {
+                if((T*)component) return true;
+                // if (dynamic_cast<T*>(component)) {
+                //     return true;
+                // }
+            }
+            return false;
+        }
+
+        // Function to get a component of a given type
+        /* template<typename T>
+        T* getComponent() const {
+            for (size_t i = 0; i < numComponents; ++i) {
+                Component* component = &components[i];
+                // Check if the component type matches the requested type
+                
+                    return component->data;
+                }
+            }
+            // Return NULL if no component of the requested type is found
+            return NULL;
+        } */
 
         virtual void update() {};
 
@@ -28,24 +79,6 @@ class EntityV2 {
 
         void addShader(Shader* newShader) {
             shader = newShader;
-        }
-
-        void updatePosition(float newX, float newY) {
-            x = newX;
-            y = newY;
-        }
-
-        void updateSize(float newWidth, float newHeight) {
-            width = newWidth;
-            height = newHeight;
-        }
-
-        virtual void setPosition(float newX, float newY) {
-            model = glm::translate(model, glm::vec3(newX, newY, 0.0f));
-
-            model = glm::translate(model, glm::vec3(-x, -y, 0.0f));
-
-            updatePosition(newX, newY);
         }
 
         virtual void resetModel() {

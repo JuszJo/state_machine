@@ -7,7 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../libs/stb_image.h"
+// #include "../libs/stb_image.h"
 
 #include "../libs/shader.h"
 

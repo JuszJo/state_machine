@@ -4,15 +4,23 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "libs/stb_image.h"
+
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "src/keyinput.h"
 
-#include "game.h"
+// #include "game.h"
+
+#include "src/EntityManager.h"
+#include "src/entityV2.h"
+#include "src/components/components.h"
 
 int display_w, display_h;
 
 KeyInput::Keys KeyInput::key;
+
+MyArray<EntityV2*> EntityManager::entity_list;
 
 GLFWwindow* initGLFW(int width, int height, const char* name) {
     if (!glfwInit()) return 0;
@@ -35,9 +43,21 @@ GLFWwindow* initGLFW(int width, int height, const char* name) {
 int main() {
     GLFWwindow* window = initGLFW(800, 600, "State Machine");
 
-    Game game(&display_w, &display_h);
+    EntityV2* entity = new EntityV2();
 
-    game.initEntities();
+    entity->addComponent<MovementComponent>();
+
+    // std::cout << entity->components[0];
+
+    EntityV2* test = EntityManager::getEntityByComponent<MovementComponent>();
+
+    std::cout << entity->components[0];
+
+    // EntityManager::entity_list.add_element()
+
+    // Game game(&display_w, &display_h);
+
+    // game.initEntities();
 
     glfwSwapInterval(1);
 
@@ -54,7 +74,7 @@ int main() {
 
         KeyInput::processInput(window);
 
-        game.run();
+        // game.run();
         
         glfwSwapBuffers(window);
     }

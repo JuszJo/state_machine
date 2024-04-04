@@ -86,3 +86,32 @@ AnimationState& RunLeft::getInstance() {
 
 	return singleton;
 }
+
+Up::Up() {
+    name = "up";
+
+    totalFrames = 1.0f;
+    currentFrame = 1.0f;
+
+    frameBuffer = 1;
+
+    loadImage(texturePath, &TBO);
+}
+
+void Up::exit(Animation* animation) {
+    animation->currentState->currentFrame = 1;
+}
+
+void Up::toggleAnimation(Animation* animation, AnimationState& animationState) {
+    animation->setState(animationState);
+}
+
+void Up::enter(Animation* animation) {
+
+}
+
+AnimationState& Up::getInstance() {
+    static Up singleton;
+
+	return singleton;
+}

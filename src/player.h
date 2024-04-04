@@ -19,17 +19,11 @@ class Player: public EntityV2 {
 
         float playerWidth, playerHeight, playerX, playerY;
 
-        glm::vec3 speed = glm::vec3(0.0f, 0.0f, 0.0f);
-
-        float acceleration = 2.0f;
-
-        Animation animation;
-
         // default constructor
         Player() {}
 
         Player(const char* texturePath, float xPos, float yPos, float playerWidth, float playerHeight) {
-            x = xPos;
+            /* x = xPos;
             y = yPos;
             width = playerWidth;
             height = playerHeight;
@@ -51,89 +45,7 @@ class Player: public EntityV2 {
 
             cleanupBuffers();
 
-            loadImage(texturePath, &TBO);
-
-            // Hitbox newHitbox(x, y, 30.0f, height);
-
-            // newHitbox.defineOffset(18.0f, 10.0f);
-
-            // hitbox = newHitbox;
-
-            // Hitbox newAttackHitbox(x, y, 50.0f, 40.0f);
-
-            // newAttackHitbox.defineOffset(18.0f, 10.0f);
-
-            // attackHitbox = newAttackHitbox;
-        }
-
-        void checkKeyInput() {
-            if(KeyInput::key.a) {
-                if(animation.currentState != &RunLeft::getInstance()) {
-                    std::cout << "left\n";
-                    speed = glm::vec3(-acceleration, speed.y, 0.0f);
-                    animation.setState(RunLeft::getInstance());
-                }
-            }
-            if(KeyInput::key.d) {
-                if(animation.currentState != &RunRight::getInstance()) {
-                    // std::cout << "right\n";
-                    speed = glm::vec3(acceleration, speed.y, 0.0f);
-                    animation.setState(RunRight::getInstance());
-                }
-                // currentState = RIGHT;
-            }
-            if(!KeyInput::key.a && !KeyInput::key.d && !KeyInput::key.w && !KeyInput::key.s) {
-                if(animation.currentState != &Idle::getInstance()) {
-                    // std::cout << "idle\n";
-                    speed = glm::vec3(0.0f, speed.y, 0.0f);
-                    animation.setState(Idle::getInstance());
-                }
-                // currentState = IDLE;
-            }
-        }
-
-        void move() {
-            x += speed.x;
-            y += speed.y;
-
-            // printf("x: %f, y: %f\n", playerX, playerY);
-        }
-
-        void updatePosition(float newPlayerX, float newPlayerY) {
-            x = newPlayerX;
-            y = newPlayerY;
-        }
-
-        void updateSize(float newPlayerWidth, float newPlayerHeight) {
-            width = newPlayerWidth;
-            height = newPlayerHeight;
-        }
-
-        void render(glm::mat4 projection) override {
-            shader->use();
-            glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-            // glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
-            glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
-            setUniform1f(shader, "totalFrames", animation.currentState->totalFrames);
-            setUniform1f(shader, "currentFrame", animation.currentState->currentFrame);
-            glBindTexture(GL_TEXTURE_2D, animation.currentState->TBO);
-            glBindVertexArray(VAO);
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-        }
-
-        void update() {
-            checkKeyInput();
-            animation.animate();
-            // checkState();
-            move();
-
-            model = glm::mat4(1.0f);
-
-            model = glm::translate(model, glm::vec3(x, y, 0.0f));
-        }
-
-        void resetModel() {
-            model = glm::mat4(1.0f);
+            loadImage(texturePath, &TBO); */
         }
 };
 
