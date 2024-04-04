@@ -22,6 +22,8 @@ KeyInput::Keys KeyInput::key;
 
 MyArray<EntityV2*> EntityManager::entity_list;
 
+// TODO: Make state machine for both movement and animations
+
 GLFWwindow* initGLFW(int width, int height, const char* name) {
     if (!glfwInit()) return 0;
 
