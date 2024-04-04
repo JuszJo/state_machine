@@ -26,12 +26,30 @@ class EntityManager {
             }
         }
 
-        // Function to get an entity by its component
+        // // Function to get an entity by its component
+        // template<typename T>
+        // static EntityV2* getEntityByComponent() {
+        //     if(auto* component = entity_list[i]->getComponent<T>()) {
+        //     return component;
+        // }
+        //     for(int i = 0; i < entity_list.size(); ++i) {
+        //         if(entity_list[i]->hasComponent<T>()) {
+        //             return entity_list[i];
+        //         }
+        //     }
+        //     return nullptr;
+        // }
+
         template<typename T>
-        static EntityV2* getEntityByComponent() {
+        static T* getComponentByEntity() {
             for(int i = 0; i < entity_list.size(); ++i) {
-                if(entity_list[i]->hasComponent<T>()) {
-                    return entity_list[i];
+                std::cout << "manager\n";
+                T* some = entity_list[i]->getComponent<T>();
+
+                std::cout << some << "\n";
+
+                if(auto* component = entity_list[i]->getComponent<T>()) {
+                    return component;
                 }
             }
             return nullptr;

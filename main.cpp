@@ -47,11 +47,18 @@ int main() {
 
     entity->addComponent<MovementComponent>();
 
+    EntityManager::addEntity(entity);
+
     // std::cout << entity->components[0];
 
-    EntityV2* test = EntityManager::getEntityByComponent<MovementComponent>();
+    MovementComponent* test = EntityManager::getComponentByEntity<MovementComponent>();
 
-    std::cout << entity->components[0];
+    if(test != nullptr) {
+        std::cout << test->speed.x;
+    }
+
+
+    // std::cout << entity->components[0];
 
     // EntityManager::entity_list.add_element()
 

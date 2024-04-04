@@ -33,6 +33,22 @@ class EntityV2 {
             components.add_element(component); // Add the component's pointer to the array
             return component; // Return the component's pointer
         }
+
+        template<typename T>
+        T* getComponent() {
+            for(int i = 0; i < components.size(); ++i) {
+                if((T*)components[i]) return (T*)components[i];
+            }
+
+            return nullptr;
+            // for (auto component : components) {
+            //     if ((T)component) {
+            //         return (T*)component;
+            //     }
+            // }
+            // return nullptr;
+        }
+
         // template<typename T, typename... Args>
         // T* addComponent(Args... args) {
         //     T* component = new T(args...); // Create a new instance of the component
@@ -49,14 +65,19 @@ class EntityV2 {
         // }
 
         template<typename T>
-        bool hasComponent() const {
-            for (const auto& component : components) {
-                if((T*)component) return true;
-                // if (dynamic_cast<T*>(component)) {
-                //     return true;
-                // }
+        bool hasComponent() {
+            for(int i = 0; i < components.size(); ++i) {
+                if((T*)components[i]) return true;
             }
+
             return false;
+            // for (const auto& component : components) {
+            //     if((T*)component) return true;
+            //     // if (dynamic_cast<T*>(component)) {
+            //     //     return true;
+            //     // }
+            // }
+            // return false;
         }
 
         // Function to get a component of a given type
