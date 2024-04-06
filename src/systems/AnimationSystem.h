@@ -4,7 +4,11 @@
 #include "../../utils/my_array.h"
 
 #include "../EntityManager.h"
+// #include "../keyinput.h"
 #include "../components/components.h"
+
+// #include "../animation/Animation.h"
+// #include "../animation/ConcreteAnimationStates.h"
 
 class AnimationSystem {
     public:

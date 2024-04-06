@@ -53,8 +53,6 @@ int main() {
 
     EntityV2* player = new Player("src/assets/playeridle.png");
 
-    // player->addComponent<MovementComponent>();
-
     EntityManager::addEntity(player);
 
     // EntityV2* player2 = new EntityV2();
@@ -71,24 +69,9 @@ int main() {
 
     player->getComponent<RenderComponent>(ComponentType::RENDER)->projection = &projection;
 
-    // std::cout << movementComponents[0]->speed.x << "\n";
-    // std::cout << movementComponents[1]->speed.x << "\n";
-
-    // std::cout << entity->components[0];
-
-    // MovementComponent* test = EntityManager::getComponentByEntity<MovementComponent>();
-
-    // MovementSystem movementSystem;
-
+    MovementSystem movementSystem;
     RenderSystem renderSystem;
     AnimationSystem animationSystem;
-
-    // if(test != nullptr) {
-    //     std::cout << test->speed.x;
-    // }
-
-
-    // std::cout << entity->components[0];
 
     // EntityManager::entity_list.add_element()
 
@@ -115,10 +98,7 @@ int main() {
 
         renderSystem.update();
         animationSystem.update();
-
-        // movementSystem.update();
-
-        // std::cout << entity->getComponent<MovementComponent>()->speed.x;
+        movementSystem.update();
 
         // game.run();
         

@@ -8,8 +8,6 @@
 
 #include "components/components.h"
 
-// #include "keyinput.h"
-
 #include "animation/Animation.h"
 #include "animation/ConcreteAnimationStates.h"
 
@@ -26,18 +24,24 @@ class Player: public EntityV2 {
         Player() {}
 
         Player(const char* texturePath): EntityV2() {
+            PlayerComponent* playerComponent = new PlayerComponent;
+            playerComponent->base.type = ComponentType::PLAYER;
+            this->components[ComponentType::PLAYER] = (BaseComponent*)playerComponent;
+
+            PositionComponent* positionComponent = new PositionComponent;
+            positionComponent->base.type = ComponentType::POSITION;
+            positionComponent->position = glm::vec3(0.0f, 0.0f, 0.0f);
+            this->components[ComponentType::POSITION] = (BaseComponent*)positionComponent;
 
             MovementComponent* move = new MovementComponent;
             move->base.type = ComponentType::MOVEMENT;
             move->acceleration = 2.0f;
             move->speed = glm::vec3(0.0f, 0.0f, 0.0f);
             this->components[ComponentType::MOVEMENT] = (BaseComponent*)move;
-            // this->components.add_element(move);
 
             RenderComponent* render = new RenderComponent;
             render->base.type = ComponentType::RENDER;
             render->shader = new Shader("shaders\\vertexShader.glsl", "shaders\\fragmentShader.glsl");
-            render->position = glm::vec3(0.0f, 0.0f, 0.0f);
             render->model = glm::mat4(1.0f);
             render->VAO = 1;
             render->VBO = 2;
@@ -49,17 +53,11 @@ class Player: public EntityV2 {
             render->TBO = &animationComponent->animation->currentState->TBO;
             this->components[ComponentType::ANIMATION] = (BaseComponent*)animationComponent;
 
-
-            // // x = xPos;
-            // // y = yPos;
-            // // width = playerWidth;
-            // // height = playerHeight;
-
             float vertices[20] = {
-                render->position.x, render->position.y, 0.0f, 0.0f, 1.0f,
-                render->position.x + 78, render->position.y, 0.0f, 1.0f, 1.0f,
-                render->position.x, render->position.y + 58, 0.0f, 0.0f, 0.0f,
-                render->position.x + 78, render->position.y + 58, 0.0f, 1.0f, 0.0f
+                positionComponent->position.x, positionComponent->position.y, 0.0f, 0.0f, 1.0f,
+                positionComponent->position.x + 78, positionComponent->position.y, 0.0f, 1.0f, 1.0f,
+                positionComponent->position.x, positionComponent->position.y + 58, 0.0f, 0.0f, 0.0f,
+                positionComponent->position.x + 78, positionComponent->position.y + 58, 0.0f, 1.0f, 0.0f
             };
 
             genVertexandBuffers(&render->VAO, &render->VBO);

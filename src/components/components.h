@@ -7,19 +7,30 @@
 #include "../../libs/shader.h"
 
 #include "../animation/Animation.h"
-#include "../animation/ConcreteAnimationStates.h"
 
 enum ComponentType {
+    POSITION,
     RENDER,
     MOVEMENT,
     ANIMATION,
+    PLAYER,
     NONE
 };
 
 // BaseComponent struct
 struct BaseComponent {
     int entityId;  // ID of the entity this component belongs to
-    ComponentType type = NONE;
+    ComponentType type;
+};
+
+struct PlayerComponent {
+    struct BaseComponent base;
+};
+
+struct PositionComponent {
+    struct BaseComponent base;
+
+    glm::vec3 position;
 };
 
 struct MovementComponent {
@@ -42,8 +53,6 @@ struct RenderComponent {
     glm::mat4 model;
 
     glm::mat4* projection;
-
-    glm::vec3 position;
 };
 
 struct AnimationComponent {
