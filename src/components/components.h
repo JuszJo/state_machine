@@ -5,12 +5,13 @@
 
 #include "../../libs/shader.h"
 
-// #include "../animation/Animation.h"
-// #include "../animation/ConcreteAnimationStates.h"
+#include "../animation/Animation.h"
+#include "../animation/ConcreteAnimationStates.h"
 
 enum ComponentType {
     RENDER,
     MOVEMENT,
+    ANIMATION,
     NONE
 };
 
@@ -40,6 +41,12 @@ struct RenderComponent {
     glm::mat4* projection;
 
     glm::vec3 position;
+};
+
+struct AnimationComponent {
+    struct BaseComponent base;
+    
+    Animation* animation;
 };
 
 #endif

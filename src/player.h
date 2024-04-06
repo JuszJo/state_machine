@@ -65,6 +65,7 @@ class Player: public EntityV2 {
             cleanupBuffers();
 
             loadImage(texturePath, &render->TBO);
+            
             /* genVertexandBuffers(&VAO, &VBO);
             bindVAO(VAO);
 
@@ -77,6 +78,10 @@ class Player: public EntityV2 {
             cleanupBuffers();
 
             loadImage(texturePath, &TBO); */
+
+            AnimationComponent* animationComponent = new AnimationComponent();
+            animationComponent->base.type = ComponentType::ANIMATION;
+            this->components[ComponentType::ANIMATION] = (BaseComponent*)animationComponent;
         }
 };
 
