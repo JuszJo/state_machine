@@ -2,6 +2,7 @@
 
 #include "AnimationState.h"
 #include "Animation.h"
+#include "../../utils/image_loader.h"
 
 class Idle : public AnimationState {
     public:

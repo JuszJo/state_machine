@@ -4,9 +4,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "libs/stb_image.h"
-
+#include "../libs/stb_image.h"
 #define STB_IMAGE_IMPLEMENTATION
+
+#include "utils/image_loader.h"
 
 #include "src/keyinput.h"
 

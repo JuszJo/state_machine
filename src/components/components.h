@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include <glm/glm.hpp>
+#include <GL/glew.h>
 
 #include "../../libs/shader.h"
 
@@ -34,7 +35,9 @@ struct RenderComponent {
 
     Shader* shader;
 
-    unsigned int VAO, VBO, TBO;
+    GLuint VAO;
+    GLuint VBO;
+    unsigned int* TBO;
 
     glm::mat4 model;
 
@@ -45,7 +48,7 @@ struct RenderComponent {
 
 struct AnimationComponent {
     struct BaseComponent base;
-    
+
     Animation* animation;
 };
 

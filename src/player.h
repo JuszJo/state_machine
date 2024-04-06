@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "entityV2.h"
+#include "../utils/image_loader.h"
 
 #include "../game.h"
 
@@ -9,8 +10,8 @@
 
 // #include "keyinput.h"
 
-// #include "animation/Animation.h"
-// #include "animation/ConcreteAnimationStates.h"
+#include "animation/Animation.h"
+#include "animation/ConcreteAnimationStates.h"
 
 class Player: public EntityV2 {
     private:
@@ -38,7 +39,15 @@ class Player: public EntityV2 {
             render->shader = new Shader("shaders\\vertexShader.glsl", "shaders\\fragmentShader.glsl");
             render->position = glm::vec3(0.0f, 0.0f, 0.0f);
             render->model = glm::mat4(1.0f);
+            render->VAO = 1;
+            render->VBO = 2;
             this->components[ComponentType::RENDER] = (BaseComponent*)render;
+
+            AnimationComponent* animationComponent = new AnimationComponent;
+            animationComponent->animation = new Animation();
+            animationComponent->base.type = ComponentType::ANIMATION;
+            render->TBO = &animationComponent->animation->currentState->TBO;
+            this->components[ComponentType::ANIMATION] = (BaseComponent*)animationComponent;
 
 
             // // x = xPos;
@@ -64,7 +73,7 @@ class Player: public EntityV2 {
 
             cleanupBuffers();
 
-            loadImage(texturePath, &render->TBO);
+            ImageLoader::loadImage(texturePath, render->TBO);
             
             /* genVertexandBuffers(&VAO, &VBO);
             bindVAO(VAO);
@@ -78,10 +87,6 @@ class Player: public EntityV2 {
             cleanupBuffers();
 
             loadImage(texturePath, &TBO); */
-
-            AnimationComponent* animationComponent = new AnimationComponent();
-            animationComponent->base.type = ComponentType::ANIMATION;
-            this->components[ComponentType::ANIMATION] = (BaseComponent*)animationComponent;
         }
 };
 

@@ -58,6 +58,20 @@ class EntityManager {
             }
             return components;
         }
+
+        template<typename T>
+        static MyArray<EntityV2*> getEntitiesByComponent(enum ComponentType type) {
+            MyArray<EntityV2*> entities;
+
+            for(int i = 0; i < entity_list.size(); ++i) {
+                EntityV2* currentEntity = entity_list[i];
+
+                if(currentEntity->hasComponent<T>(type)) {
+                    entities.add_element(currentEntity);
+                }
+            }
+            return entities;
+        }
 };
 
 #endif

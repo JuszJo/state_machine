@@ -8,7 +8,7 @@ Idle::Idle() {
 
     frameBuffer = 4;
 
-    loadImage(texturePath, &TBO);
+    ImageLoader::loadImage(texturePath, &TBO);
 }
 
 void Idle::exit(Animation* animation) {
@@ -37,7 +37,7 @@ RunRight::RunRight() {
 
     frameBuffer = 4;
 
-    loadImage(texturePath, &TBO);
+    ImageLoader::loadImage(texturePath, &TBO);
 }
 
 void RunRight::exit(Animation* animation) {
@@ -66,7 +66,7 @@ RunLeft::RunLeft() {
 
     frameBuffer = 4;
 
-    loadImage(texturePath, &TBO);
+    ImageLoader::loadImage(texturePath, &TBO);
 }
 
 void RunLeft::exit(Animation* animation) {
@@ -95,7 +95,7 @@ Up::Up() {
 
     frameBuffer = 1;
 
-    loadImage(texturePath, &TBO);
+    ImageLoader::loadImage(texturePath, &TBO);
 }
 
 void Up::exit(Animation* animation) {

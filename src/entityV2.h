@@ -7,7 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../libs/stb_image.h"
+// #include "../libs/stb_image.h"
 
 #include "../libs/shader.h"
 
@@ -121,6 +121,10 @@ class EntityV2 {
 
         void genVertexandBuffers(unsigned int* VAO, unsigned int* VBO) {
             glGenVertexArrays(1, VAO);
+            GLenum error;
+            while ((error = glGetError()) != GL_NO_ERROR) {
+                std::cerr << "OpenGL error: " << error << std::endl;
+            }
             glGenBuffers(1, VBO);
         }
 
@@ -147,38 +151,38 @@ class EntityV2 {
             glEnableVertexAttribArray(location);
         }
 
-        void loadImage(const char* path, unsigned int* TBO) {
-            int width, height, nChannels;
+        // void loadImage(const char* path, unsigned int* TBO) {
+        //     int width, height, nChannels;
 
-            stbi_uc* imageData = stbi_load(path, &width, &height, &nChannels, 0);
+        //     stbi_uc* imageData = stbi_load(path, &width, &height, &nChannels, 0);
 
-            if(!imageData) {
-                const char* reason = stbi_failure_reason();
+        //     if(!imageData) {
+        //         const char* reason = stbi_failure_reason();
 
-                std::cout << reason << std::endl;
-            }
+        //         std::cout << reason << std::endl;
+        //     }
 
-            glGenTextures(1, TBO);
-            glBindTexture(GL_TEXTURE_2D, *TBO);
+        //     glGenTextures(1, TBO);
+        //     glBindTexture(GL_TEXTURE_2D, *TBO);
 
-            // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-            // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        //     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        //     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        //     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        //     // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            if(nChannels > 3) {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
-            }
-            else {
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
-            }
+        //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        //     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        //     if(nChannels > 3) {
+        //         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+        //     }
+        //     else {
+        //         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+        //     }
 
-            glGenerateMipmap(GL_TEXTURE_2D);
+        //     glGenerateMipmap(GL_TEXTURE_2D);
 
-            stbi_image_free(imageData);
-        }
+        //     stbi_image_free(imageData);
+        // }
 
         void cleanupBuffers() {
             glBindBuffer(GL_ARRAY_BUFFER, 0);
