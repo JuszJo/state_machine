@@ -27,13 +27,14 @@ class Player: public EntityV2 {
         Player(const char* texturePath): EntityV2() {
 
             MovementComponent* move = new MovementComponent;
+            move->base.type = ComponentType::MOVEMENT;
             move->acceleration = 2.0f;
             move->speed = glm::vec3(0.0f, 0.0f, 0.0f);
-            move->base.type = ComponentType::MOVEMENT; 
             this->components[ComponentType::MOVEMENT] = (BaseComponent*)move;
             // this->components.add_element(move);
 
             RenderComponent* render = new RenderComponent;
+            render->base.type = ComponentType::RENDER;
             render->shader = new Shader("shaders\\vertexShader.glsl", "shaders\\fragmentShader.glsl");
             render->position = glm::vec3(0.0f, 0.0f, 0.0f);
             render->model = glm::mat4(1.0f);
@@ -45,25 +46,25 @@ class Player: public EntityV2 {
             // // width = playerWidth;
             // // height = playerHeight;
 
-            // float vertices[20] = {
-            //     render->position.x, render->position.y, 0.0f, 0.0f, 1.0f,
-            //     render->position.x + 78, render->position.y, 0.0f, 1.0f, 1.0f,
-            //     render->position.x, render->position.y + 52, 0.0f, 0.0f, 0.0f,
-            //     render->position.x + 78, render->position.y + 52, 0.0f, 1.0f, 0.0f
-            // };
+            float vertices[20] = {
+                render->position.x, render->position.y, 0.0f, 0.0f, 1.0f,
+                render->position.x + 78, render->position.y, 0.0f, 1.0f, 1.0f,
+                render->position.x, render->position.y + 58, 0.0f, 0.0f, 0.0f,
+                render->position.x + 78, render->position.y + 58, 0.0f, 1.0f, 0.0f
+            };
 
-            // genVertexandBuffers(&render->VAO, &render->VBO);
-            // bindVAO(render->VAO);
+            genVertexandBuffers(&render->VAO, &render->VBO);
+            bindVAO(render->VAO);
 
-            // int verticeSize = sizeof(vertices);
-            // handleVertexBufferObject(render->VBO, vertices, verticeSize);
+            int verticeSize = sizeof(vertices);
+            handleVertexBufferObject(render->VBO, vertices, verticeSize);
 
-            // handleVertexArrayObject(0, 3, stride, 0);
-            // handleVertexArrayObject(1, 2, stride, 3);
+            handleVertexArrayObject(0, 3, stride, 0);
+            handleVertexArrayObject(1, 2, stride, 3);
 
-            // cleanupBuffers();
+            cleanupBuffers();
 
-            // loadImage(texturePath, &render->TBO);
+            loadImage(texturePath, &render->TBO);
             /* genVertexandBuffers(&VAO, &VBO);
             bindVAO(VAO);
 
