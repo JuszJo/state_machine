@@ -3,27 +3,43 @@
 
 #include <glm/glm.hpp>
 
+#include "../../libs/shader.h"
+
 // #include "../animation/Animation.h"
 // #include "../animation/ConcreteAnimationStates.h"
+
+enum ComponentType {
+    RENDER,
+    MOVEMENT,
+    NONE
+};
 
 // BaseComponent struct
 struct BaseComponent {
     int entityId;  // ID of the entity this component belongs to
+    ComponentType type = NONE;
 };
 
+struct MovementComponent {
+    struct BaseComponent base;
 
-struct MovementComponent: public BaseComponent {
-    glm::vec3 speed = glm::vec3(0.0f, 0.0f, 0.0f);
+    glm::vec3 speed;
 
-    float acceleration = 0.0f;
+    float acceleration;
 };
 
-struct RenderComponent: public BaseComponent {
-    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
-};
+struct RenderComponent {
+    struct BaseComponent base;
 
-// struct AnimationComponent: public BaseComponent {
-//     Animation animation;
-// };
+    Shader* shader;
+
+    unsigned int VAO, VBO, TBO;
+
+    glm::mat4 model;
+
+    glm::mat4* projection;
+
+    glm::vec3 position;
+};
 
 #endif

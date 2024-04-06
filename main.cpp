@@ -14,7 +14,11 @@
 
 #include "src/EntityManager.h"
 #include "src/entityV2.h"
+#include "src/player.h"
 #include "src/components/components.h"
+
+#include "src/systems/Movement.h"
+#include "src/systems/Render.h"
 
 int display_w, display_h;
 
@@ -45,19 +49,40 @@ GLFWwindow* initGLFW(int width, int height, const char* name) {
 int main() {
     GLFWwindow* window = initGLFW(800, 600, "State Machine");
 
-    EntityV2* entity = new EntityV2();
+    EntityV2* player = new Player("src/assets/playeridle.png");
 
-    entity->addComponent<MovementComponent>();
+    // player->addComponent<MovementComponent>();
 
-    EntityManager::addEntity(entity);
+    EntityManager::addEntity(player);
+
+    // EntityV2* player2 = new EntityV2();
+
+    // player2->addComponent<MovementComponent>();
+
+    // player2->getComponent<MovementComponent>()->speed.x = 50.0f;
+
+    // EntityManager::addEntity(player2);
+
+    MyArray<MovementComponent*> movementComponents = EntityManager::getComponentsByEntity<MovementComponent>(ComponentType::MOVEMENT);
+
+    glm::mat4 projection;
+
+    player->getComponent<RenderComponent>(ComponentType::RENDER)->projection = &projection;
+
+    // std::cout << movementComponents[0]->speed.x << "\n";
+    // std::cout << movementComponents[1]->speed.x << "\n";
 
     // std::cout << entity->components[0];
 
-    MovementComponent* test = EntityManager::getComponentByEntity<MovementComponent>();
+    // MovementComponent* test = EntityManager::getComponentByEntity<MovementComponent>();
 
-    if(test != nullptr) {
-        std::cout << test->speed.x;
-    }
+    // MovementSystem movementSystem;
+
+    RenderSystem renderSystem;
+
+    // if(test != nullptr) {
+    //     std::cout << test->speed.x;
+    // }
 
 
     // std::cout << entity->components[0];
@@ -82,6 +107,14 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         KeyInput::processInput(window);
+
+        projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
+
+        renderSystem.update();
+
+        // movementSystem.update();
+
+        // std::cout << entity->getComponent<MovementComponent>()->speed.x;
 
         // game.run();
         

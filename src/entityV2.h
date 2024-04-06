@@ -7,15 +7,18 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "../libs/stb_image.h"
+
 #include "../libs/shader.h"
 
-#include "../utils/my_array.h"
+// #include "../utils/my_array.h"
 
 #include "components/components.h"
 
 class EntityV2 {
     public:
-        MyArray<BaseComponent*> components;
+        static const int MAX_SIZE = 100;
+        BaseComponent* components[MAX_SIZE];
 
         glm::mat4 model = glm::mat4(1.0f);
 
@@ -26,35 +29,41 @@ class EntityV2 {
         // virtual void listen(KeyInput::Keys* keys) {};
         Shader* shader;
 
-         // Add a component to the entity
-        template<typename T>
-        T* addComponent() {
-            T* component = new T(); // Create a new instance of the component
-            components.add_element(component); // Add the component's pointer to the array
-            return component; // Return the component's pointer
-        }
+        EntityV2() {
+            for(int i = 0; i < MAX_SIZE; ++i) {
+                components[i] = (BaseComponent*)malloc(sizeof(BaseComponent));
 
-        template<typename T>
-        T* getComponent() {
-            for(int i = 0; i < components.size(); ++i) {
-                if((T*)components[i]) return (T*)components[i];
+                components[i]->type = ComponentType::NONE;
             }
-
-            return nullptr;
-            // for (auto component : components) {
-            //     if ((T)component) {
-            //         return (T*)component;
-            //     }
-            // }
-            // return nullptr;
         }
 
-        // template<typename T, typename... Args>
-        // T* addComponent(Args... args) {
-        //     T* component = new T(args...); // Create a new instance of the component
-        //     components.add_element(component); // Add the component's pointer to the array
+         // Add a component to the entity
+        // template<typename T>
+        // T* addComponent() {
+        //     T* component = new T(); // Create a new instance of the component
+        //     components[component] // Add the component's pointer to the array
         //     return component; // Return the component's pointer
         // }
+
+        template<typename T>
+        T* getComponent(enum ComponentType type) {
+            T* currentComponent = (T*)components[type];
+
+            if(currentComponent) {
+                return currentComponent;
+            }
+            // for(int i = 0; i < MAX_SIZE; ++i) {
+            //     // T* currentComponent = (T*)components[i];
+
+            //     std::cout << components[i]->type << std::endl;
+            //     // std::cout << type << std::endl;
+            //     if(components[i]->type == type) {
+            //         return (T*)components[i];
+            //     }
+            // }
+
+            return nullptr;
+        }
 
         // // Remove a component from the entity
         // template<typename T>
@@ -65,34 +74,15 @@ class EntityV2 {
         // }
 
         template<typename T>
-        bool hasComponent() {
-            for(int i = 0; i < components.size(); ++i) {
-                if((T*)components[i]) return true;
+        bool hasComponent(enum ComponentType type) {
+            T* currentComponent = (T*)components[type];
+
+            if(currentComponent->base.type == type) {
+                return true;
             }
 
             return false;
-            // for (const auto& component : components) {
-            //     if((T*)component) return true;
-            //     // if (dynamic_cast<T*>(component)) {
-            //     //     return true;
-            //     // }
-            // }
-            // return false;
         }
-
-        // Function to get a component of a given type
-        /* template<typename T>
-        T* getComponent() const {
-            for (size_t i = 0; i < numComponents; ++i) {
-                Component* component = &components[i];
-                // Check if the component type matches the requested type
-                
-                    return component->data;
-                }
-            }
-            // Return NULL if no component of the requested type is found
-            return NULL;
-        } */
 
         virtual void update() {};
 

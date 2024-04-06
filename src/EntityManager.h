@@ -3,6 +3,7 @@
 
 #include "../utils/my_array.h"
 #include "entityV2.h"
+#include "components/components.h"
 
 class EntityManager {
     public:
@@ -41,18 +42,21 @@ class EntityManager {
         // }
 
         template<typename T>
-        static T* getComponentByEntity() {
+        static MyArray<T*> getComponentsByEntity(enum ComponentType type) {
+            MyArray<T*> components;
+
             for(int i = 0; i < entity_list.size(); ++i) {
-                std::cout << "manager\n";
-                T* some = entity_list[i]->getComponent<T>();
+                EntityV2* currentEntity = entity_list[i];
 
-                std::cout << some << "\n";
+                if(currentEntity->hasComponent<T>(type)) {
+                    T* entityComponent = currentEntity->getComponent<T>(type);
 
-                if(auto* component = entity_list[i]->getComponent<T>()) {
-                    return component;
+                    if(entityComponent != nullptr) {
+                        components.add_element(entityComponent);
+                    }
                 }
             }
-            return nullptr;
+            return components;
         }
 };
 
