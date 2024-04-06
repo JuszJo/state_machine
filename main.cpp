@@ -20,6 +20,7 @@
 
 #include "src/systems/Movement.h"
 #include "src/systems/Render.h"
+#include "src/systems/AnimationSystem.h"
 
 int display_w, display_h;
 
@@ -80,6 +81,7 @@ int main() {
     // MovementSystem movementSystem;
 
     RenderSystem renderSystem;
+    AnimationSystem animationSystem;
 
     // if(test != nullptr) {
     //     std::cout << test->speed.x;
@@ -112,6 +114,7 @@ int main() {
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
 
         renderSystem.update();
+        animationSystem.update();
 
         // movementSystem.update();
 
