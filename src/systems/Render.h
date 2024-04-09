@@ -27,9 +27,10 @@ class RenderSystem {
                     AnimationComponent* animationComponent = currentEntity->getComponent<AnimationComponent>(ComponentType::ANIMATION);
                     currentEntity->setUniform1i(currentComponent->shader, "totalFrames", animationComponent->animation->currentState->totalFrames);
                     currentEntity->setUniform1i(currentComponent->shader, "currentFrame", animationComponent->animation->currentState->currentFrame);
+                    glBindTexture(GL_TEXTURE_2D, animationComponent->animation->currentState->TBO);
                 }
 
-                glBindTexture(GL_TEXTURE_2D, *currentComponent->TBO);
+                // glBindTexture(GL_TEXTURE_2D, *currentComponent->TBO);
                 glBindVertexArray(currentComponent->VAO);
                 glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             }

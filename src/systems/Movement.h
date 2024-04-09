@@ -22,20 +22,32 @@ class MovementSystem {
 
                 if(
                     currentPlayer->hasComponent<PositionComponent>(ComponentType::POSITION) &&
-                    currentPlayer->hasComponent<MovementComponent>(ComponentType::MOVEMENT)
+                    currentPlayer->hasComponent<MovementComponent>(ComponentType::MOVEMENT) &&
+                    currentPlayer->hasComponent<RenderComponent>(ComponentType::RENDER) &&
+                    currentPlayer->hasComponent<AnimationComponent>(ComponentType::ANIMATION)
                 ) {
                     PositionComponent* positionComponent = currentPlayer->getComponent<PositionComponent>(ComponentType::POSITION);
                     MovementComponent* movementComponent = currentPlayer->getComponent<MovementComponent>(ComponentType::MOVEMENT);
                     RenderComponent* renderComponent = currentPlayer->getComponent<RenderComponent>(ComponentType::RENDER);
+                    AnimationComponent* animationComponent = currentPlayer->getComponent<AnimationComponent>(ComponentType::ANIMATION);
 
                     if(KeyInput::key.a) {
                         movementComponent->speed.x = -movementComponent->acceleration;
+                        if(animationComponent->animation->currentState != &RunLeft::getInstance()) {
+                            animationComponent->animation->toggleAnimation(RunLeft::getInstance());
+                        }
                     }
                     if(KeyInput::key.d) {
                         movementComponent->speed.x = movementComponent->acceleration;
+                        if(animationComponent->animation->currentState != &RunRight::getInstance()) {
+                            animationComponent->animation->toggleAnimation(RunRight::getInstance());
+                        }
                     }
                     if(!KeyInput::key.a && !KeyInput::key.d) {
                         movementComponent->speed.x = 0.0f;
+                        if(animationComponent->animation->currentState != &Idle::getInstance()) {
+                            animationComponent->animation->toggleAnimation(Idle::getInstance());
+                        }
                     }
 
                     positionComponent->position.x += movementComponent->speed.x;
