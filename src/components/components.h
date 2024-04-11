@@ -15,6 +15,7 @@ enum ComponentType {
     ANIMATION,
     PLAYER,
     GRAVITY,
+    COLLISION,
     NONE
 };
 
@@ -66,6 +67,10 @@ struct GravityComponent {
     struct BaseComponent base;
 
     glm::vec3 gForce;
+};
+
+struct CollisionComponent {
+    struct BaseComponent base;
 };
 
 #endif
