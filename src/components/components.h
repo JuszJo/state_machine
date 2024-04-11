@@ -14,6 +14,7 @@ enum ComponentType {
     MOVEMENT,
     ANIMATION,
     PLAYER,
+    GRAVITY,
     NONE
 };
 
@@ -59,6 +60,12 @@ struct AnimationComponent {
     struct BaseComponent base;
 
     Animation* animation;
+};
+
+struct GravityComponent {
+    struct BaseComponent base;
+
+    float gForce;
 };
 
 #endif
