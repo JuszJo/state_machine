@@ -22,6 +22,7 @@
 #include "src/systems/Render.h"
 #include "src/systems/AnimationSystem.h"
 #include "src/systems/Gravity.h"
+#include "src/systems/Collision.h"
 
 int display_w, display_h;
 
@@ -76,6 +77,7 @@ int main() {
     RenderSystem renderSystem;
     AnimationSystem animationSystem;
     GravitySystem gravitySystem;
+    CollisionSystem collisionSystem;
 
     // EntityManager::entity_list.add_element()
 
@@ -100,10 +102,11 @@ int main() {
 
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
 
-        renderSystem.update();
+        collisionSystem.checkWallCollision();
         animationSystem.update();
         movementSystem.update();
         gravitySystem.update();
+        renderSystem.update();
 
         // game.run();
         

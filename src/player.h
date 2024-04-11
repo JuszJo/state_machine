@@ -64,6 +64,10 @@ class Player: public EntityV2 {
             gravityComponent->gForce = glm::vec3(0.0f, 0.1f, 0.0f);
             this->components[ComponentType::GRAVITY] = (BaseComponent*)gravityComponent;
 
+            CollisionComponent* collitionComponent = new CollisionComponent;
+            collitionComponent->base.type = ComponentType::COLLISION;
+            this->components[ComponentType::COLLISION] = (BaseComponent*)collitionComponent;
+
             float vertices[20] = {
                 positionComponent->position.x, positionComponent->position.y, 0.0f, 0.0f, 1.0f,
                 positionComponent->position.x + sizeComponent->width, positionComponent->position.y, 0.0f, 1.0f, 1.0f,
