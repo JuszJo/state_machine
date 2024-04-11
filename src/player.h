@@ -61,7 +61,7 @@ class Player: public EntityV2 {
 
             GravityComponent* gravityComponent = new GravityComponent;
             gravityComponent->base.type = ComponentType::GRAVITY;
-            gravityComponent->gForce = glm::vec3(0.0f, 0.1f, 0.0f);
+            gravityComponent->gForce = glm::vec3(0.0f, 0.3f, 0.0f);
             this->components[ComponentType::GRAVITY] = (BaseComponent*)gravityComponent;
 
             CollisionComponent* collitionComponent = new CollisionComponent;
