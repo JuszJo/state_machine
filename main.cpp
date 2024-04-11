@@ -21,6 +21,7 @@
 #include "src/systems/Movement.h"
 #include "src/systems/Render.h"
 #include "src/systems/AnimationSystem.h"
+#include "src/systems/Gravity.h"
 
 int display_w, display_h;
 
@@ -69,9 +70,12 @@ int main() {
 
     player->getComponent<RenderComponent>(ComponentType::RENDER)->projection = &projection;
 
+    player->getComponent<PositionComponent>(ComponentType::POSITION)->position = glm::vec3(0.0f, 500.0f, 0.0f);
+
     MovementSystem movementSystem;
     RenderSystem renderSystem;
     AnimationSystem animationSystem;
+    GravitySystem gravitySystem;
 
     // EntityManager::entity_list.add_element()
 
@@ -99,6 +103,7 @@ int main() {
         renderSystem.update();
         animationSystem.update();
         movementSystem.update();
+        gravitySystem.update();
 
         // game.run();
         

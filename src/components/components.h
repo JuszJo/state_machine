@@ -65,7 +65,7 @@ struct AnimationComponent {
 struct GravityComponent {
     struct BaseComponent base;
 
-    float gForce;
+    glm::vec3 gForce;
 };
 
 #endif
