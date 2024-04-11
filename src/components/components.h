@@ -10,6 +10,7 @@
 
 enum ComponentType {
     POSITION,
+    SIZE,
     RENDER,
     MOVEMENT,
     ANIMATION,
@@ -33,6 +34,12 @@ struct PositionComponent {
     struct BaseComponent base;
 
     glm::vec3 position;
+};
+
+struct SizeComponent {
+    struct BaseComponent base;
+
+    float width, height;
 };
 
 struct MovementComponent {
