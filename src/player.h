@@ -28,6 +28,12 @@ class Player: public EntityV2 {
             playerComponent->base.type = ComponentType::PLAYER;
             this->components[ComponentType::PLAYER] = (BaseComponent*)playerComponent;
 
+            SizeComponent* sizeComponent = new SizeComponent;
+            sizeComponent->base.type = ComponentType::SIZE;
+            sizeComponent->width = 78.0f;
+            sizeComponent->height = 58.0f;
+            this->components[ComponentType::SIZE] = (BaseComponent*)sizeComponent;
+
             PositionComponent* positionComponent = new PositionComponent;
             positionComponent->base.type = ComponentType::POSITION;
             positionComponent->position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -60,9 +66,9 @@ class Player: public EntityV2 {
 
             float vertices[20] = {
                 positionComponent->position.x, positionComponent->position.y, 0.0f, 0.0f, 1.0f,
-                positionComponent->position.x + 78, positionComponent->position.y, 0.0f, 1.0f, 1.0f,
-                positionComponent->position.x, positionComponent->position.y + 58, 0.0f, 0.0f, 0.0f,
-                positionComponent->position.x + 78, positionComponent->position.y + 58, 0.0f, 1.0f, 0.0f
+                positionComponent->position.x + sizeComponent->width, positionComponent->position.y, 0.0f, 1.0f, 1.0f,
+                positionComponent->position.x, positionComponent->position.y + sizeComponent->height, 0.0f, 0.0f, 0.0f,
+                positionComponent->position.x + sizeComponent->width, positionComponent->position.y + sizeComponent->height, 0.0f, 1.0f, 0.0f
             };
 
             genVertexandBuffers(&render->VAO, &render->VBO);
