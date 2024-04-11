@@ -53,6 +53,11 @@ class Player: public EntityV2 {
             render->TBO = &animationComponent->animation->currentState->TBO;
             this->components[ComponentType::ANIMATION] = (BaseComponent*)animationComponent;
 
+            GravityComponent* gravityComponent = new GravityComponent;
+            gravityComponent->base.type = ComponentType::GRAVITY;
+            gravityComponent->gForce = 0.1f;
+            this->components[ComponentType::GRAVITY] = (BaseComponent*)gravityComponent;
+
             float vertices[20] = {
                 positionComponent->position.x, positionComponent->position.y, 0.0f, 0.0f, 1.0f,
                 positionComponent->position.x + 78, positionComponent->position.y, 0.0f, 1.0f, 1.0f,
