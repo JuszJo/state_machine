@@ -24,65 +24,31 @@ class Player: public EntityV2 {
         Player() {}
 
         Player(const char* texturePath): EntityV2() {
-            // PlayerComponent* playerComponent = new PlayerComponent;
-            // playerComponent->base.type = ComponentType::PLAYER;
-            // this->components[ComponentType::PLAYER] = (BaseComponent*)playerComponent;
-
             this->addComponent<PlayerComponent>(ComponentType::PLAYER);
-
-            // SizeComponent* sizeComponent = new SizeComponent;
-            // sizeComponent->base.type = ComponentType::SIZE;
-            // sizeComponent->width = 78.0f;
-            // sizeComponent->height = 58.0f;
-            // this->components[ComponentType::SIZE] = (BaseComponent*)sizeComponent;
 
             SizeComponent* sizeComponent = this->addComponent<SizeComponent>(ComponentType::SIZE);
             sizeComponent->width = 78.0f;
             sizeComponent->height = 58.0f;
 
-            // PositionComponent* positionComponent = new PositionComponent;
-            // positionComponent->base.type = ComponentType::POSITION;
-            // positionComponent->position = glm::vec3(0.0f, 0.0f, 0.0f);
-            // this->components[ComponentType::POSITION] = (BaseComponent*)positionComponent;
-
             PositionComponent* positionComponent = this->addComponent<PositionComponent>(ComponentType::POSITION);
             positionComponent->position = glm::vec3(0.0f, 0.0f, 0.0f);
 
-            // MovementComponent* move = new MovementComponent;
-            // move->base.type = ComponentType::MOVEMENT;
-            // move->acceleration = 2.0f;
-            // move->speed = glm::vec3(0.0f, 0.0f, 0.0f);
-            // this->components[ComponentType::MOVEMENT] = (BaseComponent*)move;
             MovementComponent* movementComponent = this->addComponent<MovementComponent>(ComponentType::MOVEMENT);
             movementComponent->acceleration = 2.0f;
             movementComponent->speed = glm::vec3(0.0f, 0.0f, 0.0f);
-
-            // RenderComponent* render = new RenderComponent;
-            // render->base.type = ComponentType::RENDER;
-            // render->shader = new Shader("shaders\\vertexShader.glsl", "shaders\\fragmentShader.glsl");
-            // render->model = glm::mat4(1.0f);
-            // render->VAO = 1;
-            // render->VBO = 2;
-            // this->components[ComponentType::RENDER] = (BaseComponent*)render;
 
             RenderComponent* renderComponent = this->addComponent<RenderComponent>(ComponentType::RENDER);
             renderComponent->shader = new Shader("shaders\\vertexShader.glsl", "shaders\\fragmentShader.glsl");
             renderComponent->model = glm::mat4(1.0f);
 
-            AnimationComponent* animationComponent = new AnimationComponent;
+            AnimationComponent* animationComponent = this->addComponent<AnimationComponent>(ComponentType::ANIMATION);
             animationComponent->animation = new Animation();
-            animationComponent->base.type = ComponentType::ANIMATION;
             renderComponent->TBO = &animationComponent->animation->currentState->TBO;
-            this->components[ComponentType::ANIMATION] = (BaseComponent*)animationComponent;
 
-            GravityComponent* gravityComponent = new GravityComponent;
-            gravityComponent->base.type = ComponentType::GRAVITY;
+            GravityComponent* gravityComponent = this->addComponent<GravityComponent>(ComponentType::GRAVITY);
             gravityComponent->gForce = glm::vec3(0.0f, 0.3f, 0.0f);
-            this->components[ComponentType::GRAVITY] = (BaseComponent*)gravityComponent;
 
-            CollisionComponent* collitionComponent = new CollisionComponent;
-            collitionComponent->base.type = ComponentType::COLLISION;
-            this->components[ComponentType::COLLISION] = (BaseComponent*)collitionComponent;
+            CollisionComponent* collisionComponent = this->addComponent<CollisionComponent>(ComponentType::COLLISION);
 
             float vertices[20] = {
                 positionComponent->position.x, positionComponent->position.y, 0.0f, 0.0f, 1.0f,
