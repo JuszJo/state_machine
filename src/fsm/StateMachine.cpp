@@ -4,10 +4,10 @@ StateMachine::StateMachine() {
 
 }
 
-void StateMachine::setState() {
+void StateMachine::setState(State& state) {
 
 }
 
-void StateMachine::toggleState() {
+void StateMachine::toggleState(State& state) {
 
 }

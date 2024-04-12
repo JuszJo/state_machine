@@ -1,19 +1,19 @@
 #pragma once
 
-// #include "AnimationState.h"
+#include "State.h"
 
-// class AnimationState;
+class State;
 
 class StateMachine {
     public:
-        // AnimationState* currentState;
+        State* currentState;
         
         StateMachine();
 
         // This will get called by the current state
-        void setState(/* AnimationState& newState */);
+        void setState(State& state);
 
-        void toggleState(/* AnimationState& animationState */);
+        void toggleState(State& state);
 
         // void update();
 };
