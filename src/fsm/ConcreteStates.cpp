@@ -31,7 +31,7 @@ void MoveRight::enter(StateMachine* stateMachine) {
 }
 
 void MoveRight::toggleState(StateMachine* stateMachine) {
-
+    stateMachine->setState(MoveRight::getInstance());
 }
 
 void MoveRight::exit(StateMachine* stateMachine) {
