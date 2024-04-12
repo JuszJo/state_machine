@@ -102,10 +102,10 @@ int main() {
 
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
 
-        collisionSystem.checkWallCollision();
         animationSystem.update();
         movementSystem.update();
         gravitySystem.update();
+        collisionSystem.checkWallCollision();
         renderSystem.update();
 
         // game.run();
