@@ -15,25 +15,31 @@ class RenderSystem {
 
             for(int i = 0; i < entities.size(); ++i) {
                 EntityV2* currentEntity = entities[i];
-                RenderComponent* currentComponent = currentEntity->getComponent<RenderComponent>(ComponentType::RENDER);
+                RenderComponent* renderComponent = currentEntity->getComponent<RenderComponent>(ComponentType::RENDER);
 
-                currentComponent->shader->use();
+                if(currentEntity->hasComponent<PositionComponent>(ComponentType::POSITION)) {
+                    PositionComponent* positionComponent = currentEntity->getComponent<PositionComponent>(ComponentType::POSITION);
+                    renderComponent->model = glm::mat4(1.0f);
+                    renderComponent->model = glm::translate(renderComponent->model, glm::vec3(positionComponent->position.x, positionComponent->position.y, 0.0f));
+                }
 
-                currentEntity->setUniformMatrix4fv(currentComponent->shader, "projection", *currentComponent->projection);
-                // currentEntity->setUniformMatrix4fv(currentComponent->shader, "view", *currentComponent->view);
-                currentEntity->setUniformMatrix4fv(currentComponent->shader, "model", currentComponent->model);
+                renderComponent->shader->use();
+
+                currentEntity->setUniformMatrix4fv(renderComponent->shader, "projection", *renderComponent->projection);
+                // currentEntity->setUniformMatrix4fv(renderComponent->shader, "view", *renderComponent->view);
+                currentEntity->setUniformMatrix4fv(renderComponent->shader, "model", renderComponent->model);
 
                 if(currentEntity->hasComponent<AnimationComponent>(ComponentType::ANIMATION)) {
                     AnimationComponent* animationComponent = currentEntity->getComponent<AnimationComponent>(ComponentType::ANIMATION);
-                    currentEntity->setUniform1i(currentComponent->shader, "totalFrames", animationComponent->animation->currentState->totalFrames);
-                    currentEntity->setUniform1i(currentComponent->shader, "currentFrame", animationComponent->animation->currentState->currentFrame);
+                    currentEntity->setUniform1i(renderComponent->shader, "totalFrames", animationComponent->animation->currentState->totalFrames);
+                    currentEntity->setUniform1i(renderComponent->shader, "currentFrame", animationComponent->animation->currentState->currentFrame);
                     glBindTexture(GL_TEXTURE_2D, animationComponent->animation->currentState->TBO);
                 }
                 else {
-                    glBindTexture(GL_TEXTURE_2D, *currentComponent->TBO);
+                    glBindTexture(GL_TEXTURE_2D, *renderComponent->TBO);
                 }
 
-                glBindVertexArray(currentComponent->VAO);
+                glBindVertexArray(renderComponent->VAO);
                 glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             }
         }

@@ -52,9 +52,6 @@ class MovementSystem {
 
                     positionComponent->position.x += movementComponent->speed.x;
                     positionComponent->position.y += movementComponent->speed.y;
-
-                    renderComponent->model = glm::mat4(1.0f);
-                    renderComponent->model = glm::translate(renderComponent->model, glm::vec3(positionComponent->position.x, positionComponent->position.y, 0.0f));
                 }
             }
         }

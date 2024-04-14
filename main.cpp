@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -90,7 +91,15 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // // Set target FPS
+    // constexpr int targetFPS = 60;
+    // // Calculate frame duration
+    // constexpr double frameDuration = 1.0 / targetFPS;
+
     while (!glfwWindowShouldClose(window)) {
+        // // Get start time
+        // double startTime = glfwGetTime();
+
         glfwGetFramebufferSize(window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
 
@@ -107,6 +116,15 @@ int main() {
         gravitySystem.update();
         collisionSystem.checkWallCollision();
         renderSystem.update();
+
+        // // Get elapsed time
+        // double endTime = glfwGetTime();
+        // double elapsedTime = endTime - startTime;
+
+        // // If frame was rendered faster than desired frame duration, sleep to limit FPS
+        // if (elapsedTime < frameDuration) {
+        //     std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>((frameDuration - elapsedTime) * 1000)));
+        // }
 
         // game.run();
         
