@@ -19,7 +19,7 @@
 #include "src/player.h"
 #include "src/components/components.h"
 
-#include "src/systems/Movement.h"
+#include "src/systems/Update.h"
 #include "src/systems/Render.h"
 #include "src/systems/AnimationSystem.h"
 #include "src/systems/Gravity.h"
@@ -74,7 +74,7 @@ int main() {
 
     player->getComponent<PositionComponent>(ComponentType::POSITION)->position = glm::vec3(0.0f, 500.0f, 0.0f);
 
-    MovementSystem movementSystem;
+    UpdateSystem updateSystem;
     RenderSystem renderSystem;
     AnimationSystem animationSystem;
     GravitySystem gravitySystem;
@@ -112,7 +112,7 @@ int main() {
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
 
         animationSystem.update();
-        movementSystem.update();
+        updateSystem.update();
         gravitySystem.update();
         collisionSystem.checkWallCollision();
         renderSystem.update();

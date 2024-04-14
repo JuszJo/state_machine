@@ -26,6 +26,8 @@ class Player: public EntityV2 {
         Player(const char* texturePath): EntityV2() {
             this->addComponent<PlayerComponent>(ComponentType::PLAYER);
 
+            this->addComponent<UpdateComponent>(ComponentType::UPDATE);
+
             SizeComponent* sizeComponent = this->addComponent<SizeComponent>(ComponentType::SIZE);
             sizeComponent->width = 78.0f;
             sizeComponent->height = 58.0f;
@@ -82,6 +84,71 @@ class Player: public EntityV2 {
             cleanupBuffers();
 
             loadImage(texturePath, &TBO); */
+        }
+
+        void render() override {
+            RenderComponent* renderComponent = this->getComponent<RenderComponent>(ComponentType::RENDER);
+
+            if(this->hasComponent<PositionComponent>(ComponentType::POSITION)) {
+                PositionComponent* positionComponent = this->getComponent<PositionComponent>(ComponentType::POSITION);
+                renderComponent->model = glm::mat4(1.0f);
+                renderComponent->model = glm::translate(renderComponent->model, glm::vec3(positionComponent->position.x, positionComponent->position.y, 0.0f));
+            }
+
+            renderComponent->shader->use();
+
+            this->setUniformMatrix4fv(renderComponent->shader, "projection", *renderComponent->projection);
+            // this->setUniformMatrix4fv(renderComponent->shader, "view", *renderComponent->view);
+            this->setUniformMatrix4fv(renderComponent->shader, "model", renderComponent->model);
+
+            if(this->hasComponent<AnimationComponent>(ComponentType::ANIMATION)) {
+                AnimationComponent* animationComponent = this->getComponent<AnimationComponent>(ComponentType::ANIMATION);
+                this->setUniform1i(renderComponent->shader, "totalFrames", animationComponent->animation->currentState->totalFrames);
+                this->setUniform1i(renderComponent->shader, "currentFrame", animationComponent->animation->currentState->currentFrame);
+                glBindTexture(GL_TEXTURE_2D, animationComponent->animation->currentState->TBO);
+            }
+            else {
+                glBindTexture(GL_TEXTURE_2D, *renderComponent->TBO);
+            }
+
+            glBindVertexArray(renderComponent->VAO);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        }
+
+        void update() override {
+            if(
+                this->hasComponent<PositionComponent>(ComponentType::POSITION) &&
+                this->hasComponent<MovementComponent>(ComponentType::MOVEMENT) &&
+                this->hasComponent<RenderComponent>(ComponentType::RENDER) &&
+                this->hasComponent<AnimationComponent>(ComponentType::ANIMATION)
+            ) {
+                PositionComponent* positionComponent = this->getComponent<PositionComponent>(ComponentType::POSITION);
+                MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
+                RenderComponent* renderComponent = this->getComponent<RenderComponent>(ComponentType::RENDER);
+                AnimationComponent* animationComponent = this->getComponent<AnimationComponent>(ComponentType::ANIMATION);
+
+                if(KeyInput::key.a) {
+                    movementComponent->speed.x = -movementComponent->acceleration;
+                    if(animationComponent->animation->currentState != &RunLeft::getInstance()) {
+                        animationComponent->animation->toggleAnimation(RunLeft::getInstance());
+                    }
+                }
+                if(KeyInput::key.d) {
+                    movementComponent->speed.x = movementComponent->acceleration;
+                    if(animationComponent->animation->currentState != &RunRight::getInstance()) {
+                        animationComponent->animation->toggleAnimation(RunRight::getInstance());
+                    }
+                }
+                if(!KeyInput::key.a && !KeyInput::key.d) {
+                    movementComponent->speed.x = 0.0f;
+                    if(animationComponent->animation->currentState != &Idle::getInstance()) {
+                        animationComponent->animation->toggleAnimation(Idle::getInstance());
+                    }
+                }
+
+                positionComponent->position.x += movementComponent->speed.x;
+                positionComponent->position.y += movementComponent->speed.y;
+            }
         }
 };
 

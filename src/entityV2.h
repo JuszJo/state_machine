@@ -80,7 +80,8 @@ class EntityV2 {
 
         virtual void update() {};
 
-        virtual void render(glm::mat4 projection) {};
+        // virtual void render(glm::mat4 projection) {};
+        virtual void render() {};
 
         void addShader(Shader* newShader) {
             shader = newShader;
