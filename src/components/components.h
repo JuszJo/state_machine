@@ -44,6 +44,16 @@ struct SizeComponent {
     float width, height;
 };
 
+struct HitboxComponent {
+    struct BaseComponent base;
+    struct SizeComponent size;
+
+    struct PositionComponent* positionComponent;
+
+    float offsetX;
+    float offsetY;
+};
+
 struct MovementComponent {
     struct BaseComponent base;
 
