@@ -18,6 +18,7 @@ enum ComponentType {
     PLAYER,
     GRAVITY,
     COLLISION,
+    HITBOX,
     NONE
 };
 
