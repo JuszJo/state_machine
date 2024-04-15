@@ -45,9 +45,9 @@ class Player: public EntityV2 {
 
             HitboxComponent* hitboxComponent = this->addComponent<HitboxComponent>(ComponentType::HITBOX);
             hitboxComponent->positionComponent = positionComponent;
-            hitboxComponent->offsetX = 20.0f;
-            hitboxComponent->offsetY = 20.0f;
-            hitboxComponent->size.width = sizeComponent->width - (hitboxComponent->offsetX * 2.0f);
+            hitboxComponent->offsetX = 15.0f;
+            hitboxComponent->offsetY = 14.0f;
+            hitboxComponent->size.width = sizeComponent->width - (hitboxComponent->offsetX * 2.0f + 10.0f);
             hitboxComponent->size.height = sizeComponent->height - (hitboxComponent->offsetY * 2.0f);
 
             MovementComponent* movementComponent = this->addComponent<MovementComponent>(ComponentType::MOVEMENT);
