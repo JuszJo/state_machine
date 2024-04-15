@@ -65,31 +65,38 @@ class CollisionSystem {
                 if(
                     currentEntity->hasComponent<SizeComponent>(ComponentType::SIZE) &&
                     currentEntity->hasComponent<PositionComponent>(ComponentType::POSITION) &&
-                    currentEntity->hasComponent<MovementComponent>(ComponentType::MOVEMENT)
+                    currentEntity->hasComponent<MovementComponent>(ComponentType::MOVEMENT) &&
+                    currentEntity->hasComponent<HitboxComponent>(ComponentType::HITBOX)
                 ) {
                     SizeComponent* sizeComponent = currentEntity->getComponent<SizeComponent>(ComponentType::SIZE);
                     PositionComponent* positionComponent = currentEntity->getComponent<PositionComponent>(ComponentType::POSITION);
                     MovementComponent* movementComponent = currentEntity->getComponent<MovementComponent>(ComponentType::MOVEMENT);
+                    HitboxComponent* hitboxComponent = currentEntity->getComponent<HitboxComponent>(ComponentType::HITBOX);
 
-                    float x = positionComponent->position.x;
-                    float y = positionComponent->position.y;
-                    float width = sizeComponent->width;
-                    float height = sizeComponent->height;
+                    // float x = positionComponent->position.x;
+                    // float y = positionComponent->position.y;
+                    // float width = sizeComponent->width;
+                    // float height = sizeComponent->height;
+
+                    float x = hitboxComponent->positionComponent->position.x + hitboxComponent->offsetX;
+                    float y = hitboxComponent->positionComponent->position.y + hitboxComponent->offsetY;
+                    float width = hitboxComponent->size.width;
+                    float height = hitboxComponent->size.height;
 
                     if(x < 0.0f) {
-                        positionComponent->position.x = 0.0f;
+                        positionComponent->position.x = 0.0f - hitboxComponent->offsetX;
                         movementComponent->speed.x = 0.0f;
                     }
                     if(x + width > 800.0f) {
-                        positionComponent->position.x = 800.0f - width;
+                        positionComponent->position.x = 800.0f - hitboxComponent->offsetX - width;
                         movementComponent->speed.x = 0.0f;
                     }
                     if(y < 0.0f) {
-                        positionComponent->position.y = 0.0f;
+                        positionComponent->position.y = 0.0f - hitboxComponent->offsetY;
                         movementComponent->speed.y = 0.0f;
                     }
                     if(y + height > 600.0f) {
-                        positionComponent->position.y = 600.0f - height;
+                        positionComponent->position.y = 600.0f - hitboxComponent->offsetY - height;
                         movementComponent->speed.y = 0.0f;
                     }
                 }
