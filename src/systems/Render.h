@@ -63,11 +63,11 @@ class RenderSystem {
             for(int i = 0; i < entities.size(); ++i) {
                 EntityV2* currentEntity = entities[i];
 
-                currentEntity->render();
-
                 if(currentEntity->hasComponent<HitboxComponent>(ComponentType::HITBOX)) {
                     legacyRenderHitbox(currentEntity);
                 }
+
+                currentEntity->render();
             }
         }
 };
