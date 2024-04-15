@@ -20,6 +20,14 @@ class Player: public EntityV2 {
 
         float playerWidth, playerHeight, playerX, playerY;
 
+        enum PlayerState {
+            IDLE,
+            RIGHT,
+            LEFT,
+        };
+
+        PlayerState playerState = PlayerState::IDLE;
+
         // default constructor
         Player() {}
 
@@ -86,6 +94,75 @@ class Player: public EntityV2 {
             loadImage(texturePath, &TBO); */
         }
 
+        void updatePositionComponent() {
+            if(
+                !this->hasComponent<PositionComponent>(ComponentType::POSITION) ||
+                !this->hasComponent<MovementComponent>(ComponentType::MOVEMENT)
+            ) return;
+
+            PositionComponent* positionComponent = this->getComponent<PositionComponent>(ComponentType::POSITION);
+            MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
+
+            positionComponent->position.x += movementComponent->speed.x;
+            positionComponent->position.y += movementComponent->speed.y;
+        }
+
+        void switchState(PlayerState state) {
+            playerState = state;
+        }
+
+        void listenToInput() {
+            if(KeyInput::key.a) {
+                if(playerState != PlayerState::LEFT) switchState(PlayerState::LEFT);
+            }
+            if(KeyInput::key.d) {
+                if(playerState != PlayerState::RIGHT) switchState(PlayerState::RIGHT);
+            }
+            if(!KeyInput::key.a && !KeyInput::key.d) {
+                if(playerState != PlayerState::IDLE)
+                switchState(PlayerState::IDLE);
+            }
+        }
+
+        void checkState() {
+            if(
+                !this->hasComponent<RenderComponent>(ComponentType::RENDER) ||
+                !this->hasComponent<AnimationComponent>(ComponentType::ANIMATION)
+            ) return;
+
+            MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
+            AnimationComponent* animationComponent = this->getComponent<AnimationComponent>(ComponentType::ANIMATION);
+
+            switch(playerState) {
+                case PlayerState::IDLE:
+                    movementComponent->speed.x = 0.0f;
+
+                    if(animationComponent->animation->currentState != &Idle::getInstance()) {
+                        animationComponent->animation->toggleAnimation(Idle::getInstance());
+                    }
+                    break;
+
+                case PlayerState::RIGHT:
+                    movementComponent->speed.x = movementComponent->acceleration;
+
+                    if(animationComponent->animation->currentState != &RunRight::getInstance()) {
+                        animationComponent->animation->toggleAnimation(RunRight::getInstance());
+                    }
+                    break;
+
+                case PlayerState::LEFT:
+                    movementComponent->speed.x = -movementComponent->acceleration;
+
+                    if(animationComponent->animation->currentState != &RunLeft::getInstance()) {
+                        animationComponent->animation->toggleAnimation(RunLeft::getInstance());
+                    }
+                    break;
+                
+                default:
+                    break;
+            }
+        }
+
         void render() override {
             RenderComponent* renderComponent = this->getComponent<RenderComponent>(ComponentType::RENDER);
 
@@ -116,39 +193,9 @@ class Player: public EntityV2 {
         }
 
         void update() override {
-            if(
-                this->hasComponent<PositionComponent>(ComponentType::POSITION) &&
-                this->hasComponent<MovementComponent>(ComponentType::MOVEMENT) &&
-                this->hasComponent<RenderComponent>(ComponentType::RENDER) &&
-                this->hasComponent<AnimationComponent>(ComponentType::ANIMATION)
-            ) {
-                PositionComponent* positionComponent = this->getComponent<PositionComponent>(ComponentType::POSITION);
-                MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
-                RenderComponent* renderComponent = this->getComponent<RenderComponent>(ComponentType::RENDER);
-                AnimationComponent* animationComponent = this->getComponent<AnimationComponent>(ComponentType::ANIMATION);
-
-                if(KeyInput::key.a) {
-                    movementComponent->speed.x = -movementComponent->acceleration;
-                    if(animationComponent->animation->currentState != &RunLeft::getInstance()) {
-                        animationComponent->animation->toggleAnimation(RunLeft::getInstance());
-                    }
-                }
-                if(KeyInput::key.d) {
-                    movementComponent->speed.x = movementComponent->acceleration;
-                    if(animationComponent->animation->currentState != &RunRight::getInstance()) {
-                        animationComponent->animation->toggleAnimation(RunRight::getInstance());
-                    }
-                }
-                if(!KeyInput::key.a && !KeyInput::key.d) {
-                    movementComponent->speed.x = 0.0f;
-                    if(animationComponent->animation->currentState != &Idle::getInstance()) {
-                        animationComponent->animation->toggleAnimation(Idle::getInstance());
-                    }
-                }
-
-                positionComponent->position.x += movementComponent->speed.x;
-                positionComponent->position.y += movementComponent->speed.y;
-            }
+            listenToInput();
+            checkState();
+            updatePositionComponent();
         }
 };
 
