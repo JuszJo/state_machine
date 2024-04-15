@@ -43,6 +43,13 @@ class Player: public EntityV2 {
             PositionComponent* positionComponent = this->addComponent<PositionComponent>(ComponentType::POSITION);
             positionComponent->position = glm::vec3(0.0f, 0.0f, 0.0f);
 
+            HitboxComponent* hitboxComponent = this->addComponent<HitboxComponent>(ComponentType::HITBOX);
+            hitboxComponent->positionComponent = positionComponent;
+            hitboxComponent->offsetX = 20.0f;
+            hitboxComponent->offsetY = 20.0f;
+            hitboxComponent->size.width = sizeComponent->width - (hitboxComponent->offsetX * 2.0f);
+            hitboxComponent->size.height = sizeComponent->height - (hitboxComponent->offsetY * 2.0f);
+
             MovementComponent* movementComponent = this->addComponent<MovementComponent>(ComponentType::MOVEMENT);
             movementComponent->acceleration = 2.0f;
             movementComponent->speed = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -79,19 +86,6 @@ class Player: public EntityV2 {
             cleanupBuffers();
 
             ImageLoader::loadImage(texturePath, renderComponent->TBO);
-            
-            /* genVertexandBuffers(&VAO, &VBO);
-            bindVAO(VAO);
-
-            int verticeSize = sizeof(vertices);
-            handleVertexBufferObject(VBO, vertices, verticeSize);
-
-            handleVertexArrayObject(0, 3, stride, 0);
-            handleVertexArrayObject(1, 2, stride, 3);
-
-            cleanupBuffers();
-
-            loadImage(texturePath, &TBO); */
         }
 
         void updatePositionComponent() {
