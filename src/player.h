@@ -28,6 +28,8 @@ class Player: public EntityV2 {
 
         PlayerState playerState = PlayerState::IDLE;
 
+        bool jump = false;
+
         // default constructor
         Player() {}
 
@@ -63,7 +65,6 @@ class Player: public EntityV2 {
             renderComponent->TBO = &animationComponent->animation->currentState->TBO;
 
             GravityComponent* gravityComponent = this->addComponent<GravityComponent>(ComponentType::GRAVITY);
-            gravityComponent->gForce = glm::vec3(0.0f, 0.3f, 0.0f);
 
             CollisionComponent* collisionComponent = this->addComponent<CollisionComponent>(ComponentType::COLLISION);
 
@@ -115,6 +116,20 @@ class Player: public EntityV2 {
             if(!KeyInput::key.a && !KeyInput::key.d) {
                 if(playerState != PlayerState::IDLE)
                 switchState(PlayerState::IDLE);
+            }
+        }
+
+        void listenForJump() {
+            if(KeyInput::key.w) {
+                if(!jump) jump = true;
+            }
+
+            if(jump) {
+                MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
+
+                movementComponent->speed.y = 10.0f;
+
+                jump = false;
             }
         }
 
@@ -189,6 +204,7 @@ class Player: public EntityV2 {
         void update() override {
             listenToInput();
             checkState();
+            listenForJump();
             updatePositionComponent();
         }
 };
