@@ -56,6 +56,10 @@ class Player: public EntityV2 {
             movementComponent->acceleration = 2.0f;
             movementComponent->speed = glm::vec3(0.0f, 0.0f, 0.0f);
 
+            JumpComponent* jumpComponent = this->addComponent<JumpComponent>(ComponentType::JUMP);
+            jumpComponent->jumpForce = 10.0f;
+            jumpComponent->canJump = true;
+
             RenderComponent* renderComponent = this->addComponent<RenderComponent>(ComponentType::RENDER);
             renderComponent->shader = new Shader("shaders\\vertexShader.glsl", "shaders\\fragmentShader.glsl");
             renderComponent->model = glm::mat4(1.0f);
@@ -120,16 +124,12 @@ class Player: public EntityV2 {
         }
 
         void listenForJump() {
-            if(KeyInput::key.w) {
-                if(!jump) jump = true;
-            }
+            JumpComponent* jumpComponent = this->getComponent<JumpComponent>(ComponentType::JUMP);
+            MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
 
-            if(jump) {
-                MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
-
+            if(KeyInput::key.w && jumpComponent->canJump) {
                 movementComponent->speed.y = 10.0f;
-
-                jump = false;
+                jumpComponent->canJump = false;
             }
         }
 

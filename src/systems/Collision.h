@@ -94,6 +94,12 @@ class CollisionSystem {
                     if(y < 0.0f) {
                         positionComponent->position.y = 0.0f - hitboxComponent->offsetY;
                         movementComponent->speed.y = 0.0f;
+
+                        if(currentEntity->hasComponent<JumpComponent>(ComponentType::JUMP)) {
+                            JumpComponent* jumpComponent = currentEntity->getComponent<JumpComponent>(ComponentType::JUMP);
+
+                            jumpComponent->canJump = true;
+                        }
                     }
                     if(y + height > 600.0f) {
                         positionComponent->position.y = 600.0f - hitboxComponent->offsetY - height;
