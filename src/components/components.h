@@ -14,6 +14,7 @@ enum ComponentType {
     UPDATE,
     RENDER,
     MOVEMENT,
+    JUMP,
     ANIMATION,
     PLAYER,
     GRAVITY,
@@ -60,6 +61,13 @@ struct MovementComponent {
     glm::vec3 speed;
 
     float acceleration;
+};
+
+struct JumpComponent {
+    struct BaseComponent base;
+
+    float jumpForce;
+    bool canJump;
 };
 
 struct UpdateComponent {
