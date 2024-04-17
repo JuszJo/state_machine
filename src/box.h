@@ -19,8 +19,8 @@ class Box: public EntityV2 {
     public:
         Box(): EntityV2() {
             SizeComponent* sizeComponent = this->addComponent<SizeComponent>(ComponentType::SIZE);
-            sizeComponent->width = 100.0f;
-            sizeComponent->height = 100.0f;
+            sizeComponent->width = 800.0f;
+            sizeComponent->height = 10.0f;
 
             PositionComponent* positionComponent = this->addComponent<PositionComponent>(ComponentType::POSITION);
             positionComponent->position = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -28,6 +28,8 @@ class Box: public EntityV2 {
             RenderComponent* renderComponent = this->addComponent<RenderComponent>(ComponentType::RENDER);
             renderComponent->shader = new Shader("shaders\\hitbox\\hitboxvertexShader.glsl", "shaders\\hitbox\\hitboxfragmentShader.glsl");
             renderComponent->model = glm::mat4(1.0f);
+
+            CollisionComponent* collisionComponent = this->addComponent<CollisionComponent>(ComponentType::COLLISION);
 
             float x = positionComponent->position.x;
             float y = positionComponent->position.y;

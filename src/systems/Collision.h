@@ -28,30 +28,34 @@ class CollisionSystem {
 
             for(int i = 0; i < entities.size(); ++i) {
                 EntityV2* currentEntity = entities[i];
+                for(int j = 0; j < entities.size(); ++j) {
+                    EntityV2* nextEntity = entities[j];
 
-                if(
-                    currentEntity->hasComponent<SizeComponent>(ComponentType::SIZE) &&
-                    currentEntity->hasComponent<PositionComponent>(ComponentType::POSITION)
-                ) {
-                    SizeComponent* sizeComponent1 = currentEntity->getComponent<SizeComponent>(ComponentType::SIZE);
-                    PositionComponent* positionComponent1 = currentEntity->getComponent<PositionComponent>(ComponentType::POSITION);
+                    if(currentEntity == nextEntity) continue;
 
-                    for(int j = 0; j < entities.size(); ++j) {
-                        EntityV2* nextEntity = entities[j];
+                    if(
+                        currentEntity->hasComponent<SizeComponent>(ComponentType::SIZE) &&
+                        currentEntity->hasComponent<PositionComponent>(ComponentType::POSITION) &&
+                        nextEntity->hasComponent<SizeComponent>(ComponentType::SIZE) &&
+                        nextEntity->hasComponent<PositionComponent>(ComponentType::POSITION)
+                    ) {
+                        SizeComponent* sizeComponent1 = currentEntity->getComponent<SizeComponent>(ComponentType::SIZE);
+                        PositionComponent* positionComponent1 = currentEntity->getComponent<PositionComponent>(ComponentType::POSITION);
+                        SizeComponent* sizeComponent2 = nextEntity->getComponent<SizeComponent>(ComponentType::SIZE);
+                        PositionComponent* positionComponent2 = nextEntity->getComponent<PositionComponent>(ComponentType::POSITION);
 
-                        if(currentEntity == nextEntity) continue;
+                        float x1 = positionComponent1->position.x;
+                        float y1 = positionComponent1->position.y;
+                        float w1 = sizeComponent1->width;
+                        float h1 = sizeComponent1->height;
 
-                        if(
-                            nextEntity->hasComponent<SizeComponent>(ComponentType::SIZE) &&
-                            nextEntity->hasComponent<PositionComponent>(ComponentType::POSITION)
-                        ) {
-                            SizeComponent* sizeComponent2 = nextEntity->getComponent<SizeComponent>(ComponentType::SIZE);
-                            PositionComponent* positionComponent2 = nextEntity->getComponent<PositionComponent>(ComponentType::POSITION);
+                        float x2 = positionComponent2->position.x;
+                        float y2 = positionComponent2->position.y;
+                        float w2 = sizeComponent2->width;
+                        float h2 = sizeComponent2->height;
 
-
-                        }
+                        bool collisionOccured = this->didCollide(x1, y1, w1, h1, x2, y2, w2, h2);
                     }
-
                 }
             }
         }

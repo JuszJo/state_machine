@@ -120,6 +120,7 @@ int main() {
         updateSystem.update();
         gravitySystem.update();
         collisionSystem.checkWallCollision();
+        collisionSystem.update();
         renderSystem.update();
 
         // // Get elapsed time
