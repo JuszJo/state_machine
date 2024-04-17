@@ -17,6 +17,7 @@
 #include "src/EntityManager.h"
 #include "src/entityV2.h"
 #include "src/player.h"
+#include "src/box.h"
 #include "src/components/components.h"
 
 #include "src/systems/Update.h"
@@ -58,6 +59,8 @@ int main() {
 
     EntityManager::addEntity(player);
 
+    Box* box = new Box();
+
     // EntityV2* player2 = new EntityV2();
 
     // player2->addComponent<MovementComponent>();
@@ -66,11 +69,11 @@ int main() {
 
     // EntityManager::addEntity(player2);
 
-    MyArray<MovementComponent*> movementComponents = EntityManager::getComponentsByEntity<MovementComponent>(ComponentType::MOVEMENT);
-
     glm::mat4 projection;
 
     player->getComponent<RenderComponent>(ComponentType::RENDER)->projection = &projection;
+
+    box->getComponent<RenderComponent>(ComponentType::RENDER)->projection = &projection;
 
     player->getComponent<PositionComponent>(ComponentType::POSITION)->position = glm::vec3(0.0f, 500.0f, 0.0f);
 
@@ -116,6 +119,7 @@ int main() {
         gravitySystem.update();
         collisionSystem.checkWallCollision();
         renderSystem.update();
+        box->render();
 
         // // Get elapsed time
         // double endTime = glfwGetTime();

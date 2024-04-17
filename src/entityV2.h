@@ -43,7 +43,7 @@ class EntityV2 {
 
             component->base.type = type;
             
-            components[type] = (BaseComponent*)component;
+            this->components[type] = (BaseComponent*)component;
 
             return component;
         }
