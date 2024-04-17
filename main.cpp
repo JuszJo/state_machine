@@ -61,6 +61,8 @@ int main() {
 
     Box* box = new Box();
 
+    EntityManager::addEntity(box);
+
     // EntityV2* player2 = new EntityV2();
 
     // player2->addComponent<MovementComponent>();
@@ -119,7 +121,6 @@ int main() {
         gravitySystem.update();
         collisionSystem.checkWallCollision();
         renderSystem.update();
-        box->render();
 
         // // Get elapsed time
         // double endTime = glfwGetTime();

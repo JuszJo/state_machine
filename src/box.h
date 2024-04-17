@@ -8,23 +8,16 @@
 
 #include "../libs/shader.h"
 
+#include "entityV2.h"
+
 #include "components/components.h"
 
-class Box {
+class Box: public EntityV2 {
     private:
-        static const int MAX_SIZE = 100;
-        BaseComponent* components[MAX_SIZE];
+        int stride = 3;
 
     public:
-        GLuint VAO, VBO;
-
-        Box() {
-            for(int i = 0; i < MAX_SIZE; ++i) {
-                components[i] = (BaseComponent*)malloc(sizeof(BaseComponent));
-
-                components[i]->type = ComponentType::NONE;
-            }
-
+        Box(): EntityV2() {
             SizeComponent* sizeComponent = this->addComponent<SizeComponent>(ComponentType::SIZE);
             sizeComponent->width = 100.0f;
             sizeComponent->height = 100.0f;
@@ -51,13 +44,13 @@ class Box {
             int stride = 3;
             int offset = 0;
 
-            glGenVertexArrays(1, &VAO);
-            glGenBuffers(1, &VBO);
+            glGenVertexArrays(1, &renderComponent->VAO);
+            glGenBuffers(1, &renderComponent->VBO);
 
-            glBindVertexArray(VAO);
+            glBindVertexArray(renderComponent->VAO);
 
             int verticeSize = sizeof(vertices);
-            glBindBuffer(GL_ARRAY_BUFFER, VBO);
+            glBindBuffer(GL_ARRAY_BUFFER, renderComponent->VBO);
             glBufferData(GL_ARRAY_BUFFER, verticeSize, vertices, GL_STATIC_DRAW);
 
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride * sizeof(float), offset == 0 ? nullptr : (void*)(offset * sizeof(float)));
@@ -81,50 +74,7 @@ class Box {
             int projectionLocation = glGetUniformLocation(renderComponent->shader->shaderProgram, "projection");
             glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(*renderComponent->projection));
 
-            glBindVertexArray(VAO);
+            glBindVertexArray(renderComponent->VAO);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }
-
-        template<typename T>
-        T* addComponent(enum ComponentType type) {
-            T* component = new T;
-
-            component->base.type = type;
-            
-            this->components[type] = (BaseComponent*)component;
-
-            return component;
-        }
-
-        template<typename T>
-        T* getComponent(enum ComponentType type) {
-            T* currentComponent = (T*)components[type];
-
-            if(currentComponent) {
-                return currentComponent;
-            }
-
-            return nullptr;
-        }
-
-        // // Remove a component from the entity
-        // template<typename T>
-        // void removeComponent() {
-        //     components.remove_element_if([&](const auto& component) {
-        //         return dynamic_cast<T*>(component.get()) != nullptr;
-        //     });
-        // }
-
-        template<typename T>
-        bool hasComponent(enum ComponentType type) {
-            T* currentComponent = (T*)components[type];
-
-            if(currentComponent->base.type == type) {
-                return true;
-            }
-
-            return false;
-        }
-
-
 };

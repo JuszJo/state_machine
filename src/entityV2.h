@@ -22,7 +22,7 @@ class EntityV2 {
 
         glm::mat4 model = glm::mat4(1.0f);
 
-        unsigned int VAO, VBO, EBO, TBO;
+        // unsigned int VAO, VBO, EBO, TBO;
 
         bool active = false;
 
