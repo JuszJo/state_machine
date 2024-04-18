@@ -33,6 +33,7 @@ KeyInput::Keys KeyInput::key;
 MyArray<EntityV2*> EntityManager::entity_list;
 
 // TODO: Make Event Manager for events
+// TODO: Add way to sub to events
 
 GLFWwindow* initGLFW(int width, int height, const char* name) {
     if (!glfwInit()) return 0;
