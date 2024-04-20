@@ -2,8 +2,12 @@
 
 #include <vector>
 
+#include "events.h"
+
 class Event {
     public:
+
+        Event() {}
 };
 
 class EventManager {
