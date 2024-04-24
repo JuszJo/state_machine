@@ -3,6 +3,7 @@
 #include "../../utils/my_array.h"
 
 #include "../EntityManager.h"
+#include "../event/EventManager.h"
 #include "../components/components.h"
 
 class CollisionSystem {
@@ -96,6 +97,11 @@ class CollisionSystem {
                         movementComponent->speed.x = 0.0f;
                     }
                     if(y < 0.0f) {
+                        Event* event = new Event(GameEvents::PLAYER_GROUND_COLLISION);
+                        EventManager::addEvent(*event);
+
+                        delete event;
+
                         positionComponent->position.y = 0.0f - hitboxComponent->offsetY;
                         movementComponent->speed.y = 0.0f;
 

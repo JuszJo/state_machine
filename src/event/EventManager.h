@@ -15,11 +15,11 @@ class Event {
 
 class EventManager {
     public:
-        static const std::vector<Event> events;
+        static std::vector<Event> events;
         
         EventManager() {};
 
-        static addEvent(Event event) const {
+        static void addEvent(Event event) {
             events.push_back(event);
         }
 };

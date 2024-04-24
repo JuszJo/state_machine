@@ -4,9 +4,9 @@
 #include "entityV2.h"
 #include "../utils/image_loader.h"
 
-#include "../game.h"
-
 #include "components/components.h"
+
+#include "event/EventManager.h"
 
 #include "animation/Animation.h"
 #include "animation/ConcreteAnimationStates.h"
@@ -104,6 +104,43 @@ class Player: public EntityV2 {
 
             positionComponent->position.x += movementComponent->speed.x;
             positionComponent->position.y += movementComponent->speed.y;
+        }
+
+        void handleEvent(GameEvents currentEvent) {
+            switch (currentEvent) {
+                case PLAYER_GROUND_COLLISION: {
+                    PositionComponent* positionComponent = this->getComponent<PositionComponent>(ComponentType::POSITION);
+                    MovementComponent* movementComponent = this->getComponent<MovementComponent>(ComponentType::MOVEMENT);
+                    HitboxComponent* hitboxComponent = this->getComponent<HitboxComponent>(ComponentType::HITBOX);
+
+                    positionComponent->position.y = 0.0f - hitboxComponent->offsetY;
+                    movementComponent->speed.y = 0.0f;
+
+                    if (this->hasComponent<JumpComponent>(ComponentType::JUMP)) {
+                        JumpComponent* jumpComponent = this->getComponent<JumpComponent>(ComponentType::JUMP);
+
+                        jumpComponent->canJump = true;
+                    }
+
+                    break;
+                 }
+
+                default:
+                    break;
+            }
+        }
+
+        void eventListener() override {
+            for(int i = 0; i < EventManager::events.size(); ++i) {
+                for(int j = 0; j < this->subscribedEvents.size(); ++j) {
+                    Event currentEvent = EventManager::events.at(i);
+                    GameEvents currentGameEvent = this->subscribedEvents[j];
+
+                    if(currentEvent.eventType == currentGameEvent) {
+                        handleEvent(currentGameEvent);
+                    }
+                }
+            }
         }
 
         void switchState(PlayerState state) {

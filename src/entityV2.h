@@ -11,14 +11,17 @@
 
 #include "../libs/shader.h"
 
-// #include "../utils/my_array.h"
+#include "../utils/my_array.h"
 
+#include "event/events.h"
 #include "components/components.h"
 
 class EntityV2 {
     public:
         static const int MAX_SIZE = 100;
         BaseComponent* components[MAX_SIZE];
+
+        MyArray<GameEvents> subscribedEvents;
 
         glm::mat4 model = glm::mat4(1.0f);
 
@@ -77,6 +80,12 @@ class EntityV2 {
 
             return false;
         }
+
+        void subscribe(GameEvents event) {
+            this->subscribedEvents.add_element(event);
+        }
+
+        virtual void eventListener() {};
 
         virtual void update() {};
 
