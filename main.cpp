@@ -36,6 +36,8 @@ MyArray<EntityV2*> EntityManager::entity_list;
 // TODO: Add way to sub to events
 // TODO: Add constructor to structs using init list
 // TODO: Refactor
+
+// NOTE: Moved code to Visual Studio
 GLFWwindow* initGLFW(int width, int height, const char* name) {
     if (!glfwInit()) return 0;
 
