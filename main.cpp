@@ -37,7 +37,7 @@ MyArray<EntityV2*> EntityManager::entity_list;
 // TODO: Add constructor to structs using init list
 // TODO: Refactor
 
-//NOTE: DEPRECATED
+//NOTE: DEPRECATED add makefile
 
 // NOTE: Moved code to Visual Studio
 GLFWwindow* initGLFW(int width, int height, const char* name) {
